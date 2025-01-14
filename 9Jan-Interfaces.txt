@@ -1,0 +1,47 @@
+interface X {
+	int a =50
+	void add();
+	void sub();
+}
+
+interface Y {
+	int b =10
+	void div();
+	void mul();
+}
+
+
+interface Z extends X,Y {
+
+}
+
+class Calculator implements Z {
+	
+	void add(){
+	Sout("Addition: "+(X.a + Y.b));
+	}
+	
+	void sub(){
+	Sout("Subtraction: "+(X.a - Y.b));
+	}
+
+	void mul(){
+	Sout("Multiplication: "+(Z.a * Z.b)); //Z can access "a" and "b" variables as Z already extends X, Y
+	}
+	
+	void div(){
+	Sout("Division: "+(X.a / Y.b));
+	}
+ 
+}
+
+
+public class InterfaceDemo
+{
+	PSVM{
+		Calculator c1 = new Calculator();
+		X x1 = c1; //restricts the c1 object to only X interface methods
+
+
+	}
+}
