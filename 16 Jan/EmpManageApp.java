@@ -372,3 +372,33 @@ e.display();
 return name;
 }
 }
+/*
+interface deleteEmployee
+{
+	private boolean generalEmployee = false;
+	public void checkDesignation(int foundId);
+	public void displayRecord();
+	public void handleDelete();
+	public void displayResult();
+}
+
+class void CeoEmployeeDeletion implements deleteEmployee
+{
+	private boolean generalEmployee = false;
+	
+	@override 
+	public void checkDesignation(int foundId)
+	{
+		if(emp[foundId].designation=="CEO")
+		{
+			System.out.println("CEO record found");	
+			generalEmployee = true;		
+		}
+		else{
+			return;
+		}
+	}
+
+
+}
+*/
