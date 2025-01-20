@@ -137,6 +137,7 @@ public class BikeRaceAssignment {
         }
 
         System.out.println("<<<<<<<<------------------------------ GOOOO!!!!!!!! -------------------------------->>>>>>>>");
+	
         System.out.println("Race is about to start!");
 
         Biker.startRace();
@@ -161,26 +162,33 @@ public class BikeRaceAssignment {
                 System.out.println("Main thread interrupted while waiting for bikers to finish in join method.");
             }
         }
+	
+	FinalReport.showReport(bikers);
 
-        System.out.println("\n--- Final Rankings ---");
+        
+    }
+}
 
-        List<String> rankings = Biker.getRankings();
+class FinalReport
+{
+	public static void showReport(List<Biker> bikers)
+	{
+		System.out.println("\n--- Final Rankings ---");
 
-        for (int i = 0; i < rankings.size(); i++) {
-            String bikerName = rankings.get(i);
-            Biker biker = bikers.stream().filter(b -> b.getName().equals(bikerName)).findFirst().orElse(null);
-            if (biker != null) {
+        	List<String> rankings = Biker.getRankings();
+
+        	for (int i = 0; i < rankings.size(); i++) {
+            	String bikerName = rankings.get(i);
+            	Biker biker = bikers.stream().filter(b -> b.getName().equals(bikerName)).findFirst().orElse(null);
+            	if (biker != null) {
                 System.out.println((i + 1) + " - " + bikerName + 
                     " | Start time: " + new Date(biker.getStartTime()) + 
                     " | End time: " + new Date(biker.getEndTime()) + 
                     " | Time taken: " + biker.getTimeTaken() / 1000 + " seconds");
-            }
+            	}
         }
 
         System.out.println("All bikers have finished the race!");
-    }
+	}
+	
 }
-
-
-//Shift the printing logic outside the main method into a dashboard method 
-//dont put much of the Bike logic in method keep it in the main method
