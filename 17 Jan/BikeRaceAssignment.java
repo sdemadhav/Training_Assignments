@@ -1,297 +1,186 @@
-
 import java.util.*;
-
 
 class Biker implements Runnable {
 
-    private String name; // Name of the biker
-
-    private int speed; // Speed in meters per second
-
-    private int raceDistance; // Total distance to be covered in the race
-
-    private int distanceCovered = 0; // Distance covered so far by the biker
-
-    private static final Object lock = new Object(); // Synchronization lock for race start
-
-    private static boolean raceStarted = false; // Flag to indicate when the race starts
-
-    private static final List<String> rankings = new ArrayList<>(); // Store rankings as bikers finish
-
+    private String name;
+    private int speed;
+    private int raceDistance;
+    private int distanceCovered = 0;
+    private static final Object lock = new Object();
+    private static boolean raceStarted = false;
+    private static final List<String> rankings = new ArrayList<>();
+    private long startTime;
+    private long endTime;
+    private long timeTaken;
 
     public Biker(String name, int speed, int raceDistance) {
-
         this.name = name;
-
         this.speed = speed;
-
         this.raceDistance = raceDistance;
-
     }
-
 
     public String getName() {
-
-        return name; // since name we have kept private and we need name for ranking
-
+        return name;
     }
 
+    public long getTimeTaken() {
+        return timeTaken;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
 
     public void run() {
-
         synchronized (lock) {
-
             try {
-
-                // All bikers must wait till racestarted flag is turned true by main thread
-
                 while (!raceStarted) {
-
                     lock.wait();
-
                 }
-
             } catch (Exception e) {
-
                 System.out.println(name + " interrupted while waiting to start the race.");
-
             }
-
         }
 
-
+        startTime = System.currentTimeMillis();
         System.out.println(name + " started the race with a speed of " + speed + " m/s!");
 
-
         try {
-
-            // Showing live ranking every second
-
             while (distanceCovered < raceDistance) {
-
-                Thread.sleep(1000); // Progress is updated every 1 second
-
-                distanceCovered += speed; // Update distance covered
+                Thread.sleep(1000);
+                distanceCovered += speed;
 
                 if (distanceCovered > raceDistance) {
-
-                    distanceCovered = raceDistance; // Cap the distance to total race distance
-
+                    distanceCovered = raceDistance;
                 }
 
                 System.out.println(name + " has covered " + distanceCovered + " meters.");
-
             }
 
+            endTime = System.currentTimeMillis();
+            timeTaken = endTime - startTime;
 
             synchronized (rankings) {
-
-                rankings.add(name); // Add biker's name to rankings when they finish
-
+                rankings.add(name);
             }
-
 
         } catch (Exception e) {
-
             System.out.println(name + " was interrupted during the race.");
-
         }
-
     }
-
 
     public int getDistanceCovered() {
-
-        return distanceCovered; // Return the distance covered till now
-
+        return distanceCovered;
     }
-
 
     public static void startRace() {
-
         synchronized (lock) {
-
-            raceStarted = true; // Start the race
-
-            lock.notifyAll(); // Notify all threads waiting for the race to start as all threads have been
-
-                              // created
-
+            raceStarted = true;
+            lock.notifyAll();
         }
-
     }
-
 
     public static boolean isRaceFinished(List<Biker> bikers) {
-
         synchronized (rankings) {
-
-            if (rankings.size() == bikers.size()) // means all bikers have been added to rankings so game over else
-
-                                                  // still going
-
-            {
-
-                return true;
-
-            }
-
-            return false;
-
+            return rankings.size() == bikers.size();
         }
-
     }
-
 
     public static List<String> getRankings() {
-
-        // we must synchronize this else if other threads take control at that time then
-
-        // maintaining rankings would be difficult
-
         synchronized (rankings) {
-
-            return new ArrayList<>(rankings); // Return the final rankings
-
+            return new ArrayList<>(rankings);
         }
-
     }
-
 }
-
 
 public class BikeRaceAssignment {
 
     public static void main(String[] args) {
 
-        final int raceDistance = 1000; // Total race distance in meters
+        final int raceDistance = 1000;
 
         String[] names = { "Madhav", "Sanat", "Karan", "Jonathan", "Atul", "Aditya", "Sumit",
-
                 "Pushpender", "Jatin", "Jasprit", "Dhoni", "Virat", "Rohit", "Rahul", "Rishabh",
-
                 "Shreyas", "Shikhar", "Hardik", "Ravindra", "Ravichandran" };
 
-
         System.out.println("---------- Welcome To Blazing Bikers Game made by Madhav Jha ----------");
-
         System.out.println("Enter the number of bikers in the game:");
 
         Scanner scanner = new Scanner(System.in);
-
         int numBikers = scanner.nextInt();
 
-
-        Thread[] bikerThreads = new Thread[numBikers]; // Array to hold biker threads
-
-        List<Biker> bikers = new ArrayList<>(); // List to hold Biker objects
-
-        Random random = new Random(); // Random object to generate random values
-
-
-        // Create and start threads for each biker
+        Thread[] bikerThreads = new Thread[numBikers];
+        List<Biker> bikers = new ArrayList<>();
+        Random random = new Random();
 
         for (int i = 0; i < numBikers; i++) {
-
-            String name = names[random.nextInt(names.length)]; // Randomly select a name
-
-            int speed = random.nextInt(100, 200); // Randomly select a speed between 10 and 20 m/s
-
-            Biker biker = new Biker(name, speed, raceDistance); // Create a new Biker
-
-            bikers.add(biker); // Add biker to the list
-
-            bikerThreads[i] = new Thread(biker, name); // Create a thread for the biker
-
-            bikerThreads[i].start(); // Start the thread
-
+            String name = names[random.nextInt(names.length)];
+            int speed = random.nextInt(100, 200);
+            Biker biker = new Biker(name, speed, raceDistance);
+            bikers.add(biker);
+            bikerThreads[i] = new Thread(biker, name);
+            bikerThreads[i].start();
         }
-
 
         System.out.println("Hold tight! Bikers are almost ready... Match starts in:");
-
         for (int i = 5; i > 0; i--) {
-
             System.out.println(i + " seconds...");
-
             try {
-
-                Thread.sleep(1000); // Countdown delay
-
+                Thread.sleep(1000);
             } catch (Exception e) {
-
                 System.out.println("Main thread interrupted during countdown.");
-
             }
-
         }
 
-
-        System.out.println(
-
-                "<<<<<<<<------------------------------ GOOOO!!!!!!!! -------------------------------->>>>>>>>");
-
-
+        System.out.println("<<<<<<<<------------------------------ GOOOO!!!!!!!! -------------------------------->>>>>>>>");
         System.out.println("Race is about to start!");
 
-        Biker.startRace(); // Start the race, and make the raceStarted boolean true
-
-
-        // Live Match Progress can be viewed by regular printing of rankings
+        Biker.startRace();
 
         while (!Biker.isRaceFinished(bikers)) {
-
             System.out.println("\n--- Race Progress ---");
-
             for (Biker biker : bikers) {
-
                 System.out.println(biker.getDistanceCovered() + " meters covered by " + biker.getName());
-
             }
 
             try {
-
-                Thread.sleep(1000); // Update progress every 1 second
-
+                Thread.sleep(1000);
             } catch (Exception e) {
-
                 System.out.println("Main thread interrupted during progress monitoring.");
-
             }
-
         }
-
-
-        // Wait for all biker threads to finish and then print the final rankings
 
         for (Thread thread : bikerThreads) {
-
             try {
-
                 thread.join();
-
             } catch (Exception e) {
-
                 System.out.println("Main thread interrupted while waiting for bikers to finish in join method.");
-
             }
-
         }
-
 
         System.out.println("\n--- Final Rankings ---");
 
         List<String> rankings = Biker.getRankings();
 
         for (int i = 0; i < rankings.size(); i++) {
-
-            System.out.println((i + 1) + " - " + rankings.get(i));
-
+            String bikerName = rankings.get(i);
+            Biker biker = bikers.stream().filter(b -> b.getName().equals(bikerName)).findFirst().orElse(null);
+            if (biker != null) {
+                System.out.println((i + 1) + " - " + bikerName + 
+                    " | Start time: " + new Date(biker.getStartTime()) + 
+                    " | End time: " + new Date(biker.getEndTime()) + 
+                    " | Time taken: " + biker.getTimeTaken() / 1000 + " seconds");
+            }
         }
 
-
         System.out.println("All bikers have finished the race!");
-
     }
-
 }
+
+
+//Shift the printing logic outside the main method into a dashboard method 
+//dont put much of the Bike logic in method keep it in the main method
