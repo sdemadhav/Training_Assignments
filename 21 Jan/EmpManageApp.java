@@ -1,10 +1,192 @@
 import java.util.*;
 import java.util.regex.*;
 
+// New class for Displaying Employee Options in one place rather than 
+class DisplayEmployeeOptions {
+
+    static List<Emp> list = new ArrayList<>(EmpManageApp.emp.values());
+
+    public static void displayEmployees() {
+        if (Emp.countEmp == 0) {
+            System.out.println("No Employee Present to Display");
+            return;
+        }
+
+        System.out.println("Enter choice to sort by: ");
+        System.out.println("1. ID Wise");
+        System.out.println("2. Name Wise");
+        System.out.println("3. Designation Wise");
+        System.out.println("4. Age Wise");
+        System.out.println("5. Salary Wise");
+        System.out.println("6. Back");
+
+        int ch = Menu.readChoice(6);
+
+        switch (ch) {
+            case 1:
+                sortByID(list);  
+                break;
+            case 2:
+                sortByName(list);  
+                break;
+            case 3:
+                Collections.sort(list, new DesignationWiseDisplay());
+                break;
+            case 4:
+                sortByAge(list);
+                break;
+            case 5:
+                sortBySalary(list);  
+                break;
+            case 6:
+                break;
+            default:
+                System.out.println("Invalid Choice");
+                break;
+        }
+
+        if (ch != 6) {
+            for (Emp e : list) {
+                e.display();
+            }
+        }
+    }
+
+    private static void sortByID(List<Emp> list) {
+        System.out.println("What order do you want to display in?");
+        System.out.println("1. Ascending");
+        System.out.println("2. Descending");
+        int choice = Menu.readChoice(2);
+        if (choice == 1) {
+            Collections.sort(list, new IDWiseDisplay());
+        } else {
+            Collections.sort(list, new IDWiseDisplayDesc());
+        }
+    }
+
+    private static void sortByName(List<Emp> list) {
+        System.out.println("What order do you want to display in?");
+        System.out.println("1. A-Z");
+        System.out.println("2. Z-A");
+        int choice = Menu.readChoice(2);
+        if (choice == 1) {
+            Collections.sort(list, new NameWiseDisplay());
+        } else {
+            Collections.sort(list, new NameWiseDisplayDesc());
+        }
+    }
+
+    private static void sortByAge(List<Emp> list) {
+        System.out.println("What order do you want to display in?");
+        System.out.println("1. Ascending");
+        System.out.println("2. Descending");
+        int choice = Menu.readChoice(2);
+        if (choice == 1) {
+            Collections.sort(list, new AgeWiseDisplay());
+        } else {
+            Collections.sort(list, new AgeWiseDisplayDesc());
+        }
+    }
+
+    private static void sortBySalary(List<Emp> list) {
+        System.out.println("What order do you want to display in?");
+        System.out.println("1. Ascending");
+        System.out.println("2. Descending");
+        int choice = Menu.readChoice(2);
+        if (choice == 1) {
+            Collections.sort(list, new SalaryWiseDisplay());
+        } else {
+            Collections.sort(list, new SalaryWiseDisplayDesc());
+        }
+    }
+
+    public static List<Emp> getList() {
+        return list;  // Return the static list
+    }
+}
+
+// SearchEmployeeOptions class for searching employee by various fields
+class SearchEmployeeOptions {
+    public static void searchEmployee() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Search by? ");
+        System.out.println("1. ID");
+        System.out.println("2. Name");
+        System.out.println("3. Designation");
+        int choice = Menu.readChoice(3);
+
+        switch (choice) {
+            case 1:
+                searchByID();
+                break;
+            case 2:
+                searchByName();
+                break;
+            case 3:
+                searchByDesignation();
+                break;
+            default:
+                System.out.println("Invalid Choice");
+        }
+    }
+
+    private static void searchByID() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Employee ID to search: ");
+        int searchId = sc.nextInt();
+
+        Emp employee = EmpManageApp.emp.get(searchId);
+
+        if (employee != null) {
+            employee.display();
+        } else {
+            System.out.println("Record not found.");
+        }
+    }
+
+    private static void searchByName() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Employee Name to search: ");
+        String searchName = sc.nextLine();
+
+        boolean found = false;
+        for (Emp employee : EmpManageApp.emp.values()) {
+            if (employee.name.equalsIgnoreCase(searchName)) {
+                employee.display();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Record not found.");
+        }
+    }
+
+    private static void searchByDesignation() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the Employee Designation to search: ");
+        String searchDesignation = sc.nextLine();
+
+        boolean found = false;
+        for (Emp employee : EmpManageApp.emp.values()) {
+            if (employee.designation.equalsIgnoreCase(searchDesignation)) {
+                employee.display();
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("Record not found.");
+        }
+    }
+}
+
+// Abstract Employee class
 abstract class Emp {
     int eid;
     String name;
-    private int age;
+    int age;
     float salary;
     String designation;
 
@@ -12,7 +194,6 @@ abstract class Emp {
 
     Emp(float salary, String designation) {
         Scanner sc = new Scanner(System.in);
-        // Check if ID already exists
         this.eid = EmployeeValidation.readID();
         this.name = EmployeeValidation.readName();
         this.age = EmployeeValidation.readAge(21, 60);
@@ -63,11 +244,87 @@ class Manager extends Emp {
     }
 }
 
+class CEO extends Emp {
+    private static boolean ceoCreated = false;
+
+    CEO() {
+        super(500000, "CEO");
+    }
+
+    @Override
+    public void raiseSalary() {
+        salary += 10000;
+    }
+
+    public static boolean isCeoCreated() {
+        return ceoCreated;
+    }
+
+    public static void setCeoCreated(boolean ceoCreated) {
+        CEO.ceoCreated = ceoCreated;
+    }
+}
+
+// Comparator classes for sorting based on different properties of Employee class
+class IDWiseDisplay implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return Integer.compare(e1.eid, e2.eid);
+    }
+}
+
+class NameWiseDisplay implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return e1.name.compareTo(e2.name);
+    }
+}
+
+class DesignationWiseDisplay implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return e1.designation.compareTo(e2.designation);
+    }
+}
+
+class AgeWiseDisplay implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return e1.age - e2.age;
+    }
+}
+
+class SalaryWiseDisplay implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return Float.compare(e1.salary, e2.salary);
+    }
+}
+
+class IDWiseDisplayDesc implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return Integer.compare(e2.eid, e1.eid);
+    }
+}
+
+class NameWiseDisplayDesc implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return e2.name.compareTo(e1.name);
+    }
+}
+
+class AgeWiseDisplayDesc implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return e2.age - e1.age;
+    }
+}
+
+class SalaryWiseDisplayDesc implements Comparator<Emp> {
+    public int compare(Emp e1, Emp e2) {
+        return Float.compare(e2.salary, e1.salary);
+    }
+}
+
+// Main Application class
 public class EmpManageApp {
-    static HashMap<Integer, Emp> emp = new HashMap();
+    static HashMap<Integer, Emp> emp = new HashMap<>();
 
     public static void main(String[] args) throws InputMismatchException {
-
         int ch1 = 0, ch2 = 0;
         Scanner sc = new Scanner(System.in);
         do {
@@ -86,39 +343,55 @@ public class EmpManageApp {
                 case 1:
                     do {
                         System.out.println("---------------------------------------------");
-                        System.out.println("1. Create Clerk");
-                        System.out.println("2. Create Programmer");
-                        System.out.println("3. Create Manager");
-                        System.out.println("4. Back");
+                        System.out.println("1. Create CEO");
+                        System.out.println("2. Create Clerk");
+                        System.out.println("3. Create Programmer");
+                        System.out.println("4. Create Manager");
+                        System.out.println("5. Back");
                         System.out.println("--------------------------------------------");
 
-                        ch2 = Menu.readChoice(4);
+                        ch2 = Menu.readChoice(5);
 
                         switch (ch2) {
                             case 1:
+                                if (CEO.isCeoCreated()) {
+                                    System.out.println("CEO already exists.");
+                                } else {
+                                    CEO ceo = new CEO();
+                                    emp.put(ceo.eid, ceo);
+                                    CEO.setCeoCreated(true);
+                                }
+                                break;
+                            case 2:
+                                if (!CEO.isCeoCreated()) {
+                                    System.out.println("Cannot create Clerk. CEO must be created first.");
+                                    continue;
+                                }
                                 Clerk c = new Clerk();
                                 emp.put(c.eid, c);
                                 break;
-                            case 2:
+                            case 3:
+                                if (!CEO.isCeoCreated()) {
+                                    System.out.println("Cannot create Programmer. CEO must be created first.");
+                                    continue;
+                                }
                                 Programmer p = new Programmer();
                                 emp.put(p.eid, p);
                                 break;
-                            case 3:
+                            case 4:
+                                if (!CEO.isCeoCreated()) {
+                                    System.out.println("Cannot create Manager. CEO must be created first.");
+                                    continue;
+                                }
                                 Manager m = new Manager();
                                 emp.put(m.eid, m);
                                 break;
                         }
-                    } while (ch2 != 4);
+                    } while (ch2 != 5);
                     break;
 
                 case 2:
-                    if (Emp.countEmp == 0) {
-                        System.out.println("No Employee Present to Display");
-                    } else {
-                        for (Emp e : emp.values()) {
-                            e.display();
-                        }
-                    }
+                    DisplayEmployeeOptions.displayEmployees();
                     break;
 
                 case 3:
@@ -151,21 +424,7 @@ public class EmpManageApp {
                     }
                     break;
                 case 5:
-                    System.out.print("Enter the record ID to be searched: ");
-                    int searchId = sc.nextInt();
-                    Iterator<Map.Entry<Integer, Emp>> iterator = emp.entrySet().iterator();
-                    boolean found = false;
-                    while (iterator.hasNext()) {
-                        Map.Entry<Integer, Emp> entry = iterator.next();
-                        if (entry.getKey() == searchId) {
-                            entry.getValue().display();
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (!found) {
-                        System.out.println("Record not found.");
-                    }
+                    SearchEmployeeOptions.searchEmployee();
                     break;
             }
         } while (ch1 != 6);
@@ -174,6 +433,7 @@ public class EmpManageApp {
     }
 }
 
+// Custom Exception Classes
 class AgeCustomException extends RuntimeException {
     public AgeCustomException() {
         super();
@@ -209,6 +469,7 @@ class InvalidNameFormatException extends RuntimeException {
     }
 }
 
+// Menu class
 class Menu {
     private static int maxChoice;
 
@@ -229,6 +490,7 @@ class Menu {
     }
 }
 
+// Employee Validation class
 class EmployeeValidation {
     static int readAge(int min, int max) {
         int age;
@@ -272,12 +534,6 @@ class EmployeeValidation {
                 return id;
             } else {
                 System.out.println("ID already exists. Please enter a unique ID.");
-                System.out.println("Some recommendations for existing IDs are as follows: " 
-        
-                + (EmpManageApp.emp.keySet().stream().max(Integer::compare).get() + 1) + ", "
-                + (EmpManageApp.emp.keySet().stream().min(Integer::compare).get() + 2 + ",")
-                + (EmpManageApp.emp.keySet().stream().max(Integer::compare).get() + 3));
-                
             }
         }
     }
