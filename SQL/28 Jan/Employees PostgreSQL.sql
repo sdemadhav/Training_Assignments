@@ -100,13 +100,142 @@ ON
 WHERE 
     e1.salary > e2.salary;
 	
--- Roll UP Function(Specific to PostgreesSQl)
+-- Roll UP Function(Specific to PostgresSQl)
 select coalesce(Designation, 'Total') as designation , sum(salary)
 from employees
 group by rollup(Designation)
 order by sum(salary);
 
+ 
+-- We are creating procedure here that shall work to execute a particular command
+CREATE OR REPLACE PROCEDURE abc()
+LANGUAGE plpgsql 
+AS $$
+BEGIN
+    INSERT INTO Employees (name, age, gender, salary, designation, email_id ,married , joining_date , manager_id)
+    VALUES ('Jonny Jones', 32, 'Male', 32000.00, 'Programmer', 'jonny.jones@example.com', FALSE, CURRENT_DATE, 1);
+END;
+$$;
 
+create or replace procedure insert_new_record(
+e_name varchar(20),
+e_age int,
+e_gender varchar(10),
+e_salary numeric(10,8),
+e_designation designation_enum,
+e_mrg_id int,
+e_email_id varchar(40),
+e_married boolean
+)
+language plpgsql
+as $$
+begin
+	insert into employees (NAME, AGE, GENDER, SALARY, DESIGNATION, manager_id, EMAIL_ID, MARRIED)
+values
+(e_name, e_age, e_gender, e_salary, e_designation, e_mrg_id, e_email_id, e_married);
+end;
+$$
+
+
+call insert_new_record('Prasath',25,'Male',100000,'Programmer',3,'prasath@xyz.com',FALSE);
+CREATE OR REPLACE PROCEDURE appraisal(
+id int,
+amount int
+)
+LANGUAGE plpgsql 
+AS $$
+BEGIN
+    update employees set SALARY = SALARY + amount where eid = id;
+END;
+$$;
+
+CREATE OR REPLACE Function max_salary(desig varchar)
+returns table(eid int, name varchar, salary decimal)
+AS $$
+BEGIN
+    return query
+	select e.eid , e.name , e.salary from Employees e
+	where e.DESIGNATION = desig
+	and e.SALARY = (select max(e2.salary) from employees e2
+	where e2.DESIGNATION = desig);
+END;
+$$ LANGUAGE plpgsql ;
+
+call abc();
+
+call appraisal (5,20000);
+
+select * from max_salary('Programmer');
+-------------------------------------------------------------------------------------
+SELECT name, salary, SUM(salary) OVER(ORDER BY salary) FROM employees;
+-- add row number in a first column
+SELECT ROW_NUMBER() OVER(ORDER BY NAME),name, designation FROM employees;
+-- rank based on the salary over is also compulsary for the same (skip ranks if two are same)
+SELECT name, salary, RANK() OVER(ORDER BY salary DESC) FROM employees;
+-- similar to the rank but doesn't skip any rank
+SELECT name, salary, DENSE_RANK() OVER(ORDER BY salary DESC) FROM employees;
+
+-- add previous row salary to the new column named lag
+	-- first is null
+SELECT name, salary, LAG(salary) OVER() FROM employees;
+
+-- add next row salary to the new column named lead
+	-- last is null
+SELECT name, salary, LEAD(salary) OVER() FROM employees;
+---------------------------------------------------------------------------------
+-- Question: Find out how many employees are earning more than their fellow employees 
+-- in their respective designations
+
+--Method 1: Using Join
+SELECT e1.*,e2.avg_salary FROM employees e1
+join (
+		SELECT designation,
+        AVG(salary) AS avg_salary
+    from
+        employees
+    GROUP BY
+        designation
+) e2 ON e1.designation = e2.designation
+WHERE    e1.salary > e2.avg_salary;
+
+
+-- method 2: Using 'with' keyword. Called CTE => Compressed Table Expression
+with avg_salary as(
+select designation , avg(salary) as avg_salary from emp group by(designation)
+)
+select e.eid 
+	from employees
+join
+	avg_salary a on e.designation = a.designation
+where 
+	e.salary > a.avg_salary;
+-------------------------------------------------
+-- Functions: Functions in SQL can return queries, tables whereas procedures can only perform some
+-- task and not return any value.
+
+create or replace function validate_salary()
+returns trigger as $$
+begin 
+	if new.salary < 12000 then 
+		new.salary = 12000;
+	end if;
+	return new;
+end;
+$$ language plpgsql;
+
+-- Creating Trigger 
+-- before inset
+create trigger before_updating_salary
+before update on Employees
+for each row
+EXECUTE function validate_salary();
+
+--below update will not be allowed as we are not allowing nay updates on salary less than 12000,
+--so if someone tries to update the salary column of the table then it should be min salary of 12000
+Update employees set salary=1500 where eid=6;
+select*from employees;
+
+-----------------------------------------------------------
 -- EMPLOYEE
 	--EID (Primary Key)
 	--NAME
