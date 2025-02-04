@@ -1,0 +1,71 @@
+Advantages of Lambda expression:
+1) helps in Junit testing, when we use it as a 2nd parameter of methods like assertsEqual and perform the function only when something fails and not everytime by saving thousands of unnecessary runs and space.
+
+2. we can call functions at runtime on the basis of input (similar to runtime polymorphism)
+
+abc(op1){}
+xyz(op2){}
+demo(op())
+{
+	op();
+}
+
+restrictions : only allowed with functional interfaces
+
+Method reference in Java:------
+1) method reference means just referring to an already existing method by not having to re write it but method reference doesn't invoke the function call , simply methods. Like consider it just points towards that function.
+
+eg
+
+interface I
+{
+	void abc();
+}
+
+
+class A
+{
+	public A()
+	{
+		System.out.println("From constructor A()");
+	}
+	public static void classMethod()
+	{
+		System.out.println("From static classMethod() in class A");
+	}
+	public void instanceMethod()
+	{
+		System.out.println("From instance method in class A");
+	}
+}
+
+public class MethodReference
+{
+	public static void main(String[] args)
+	{
+		//since instance method is not static , we must create an object of A and then give a method reference
+
+		I i1 = A::classMethod;
+		i1.abc();
+		
+		//since instance method is not static , we must create an object of A and then give a method reference
+		I i2 = new A()::instanceMethod;
+		i2.abc();
+		
+		I i3 = A::new;
+		i3.abc();
+
+		I i4 = B::demo;
+		i4.abc();
+			
+	}
+
+}
+
+
+
+here the A::instancemethod or A::classMethod simply refers the interface to point towards that method in class A. So when we call abc next time which is the abstract method of Interface i, the abc now calls the referred method ONLY when we invoke it in the next line , eg i1.abc() or i2.abc().
+
+
+So dynamically we are binding the same abc function now with already existing functions elsewhere in other classes. 
+In line 55, the new keyword points towards the cons
