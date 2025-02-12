@@ -1,0 +1,11 @@
+package com;
+
+public class Abc implements MockitoAssignment{
+
+	@Override
+	public void xyz() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

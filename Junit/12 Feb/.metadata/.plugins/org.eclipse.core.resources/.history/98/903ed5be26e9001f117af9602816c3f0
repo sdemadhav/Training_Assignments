@@ -1,0 +1,161 @@
+package com;
+
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.jupiter.api.condition.EnabledForJreRange;
+import org.junit.jupiter.api.condition.EnabledOnJre;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.JRE;
+import org.junit.jupiter.api.condition.OS;
+
+
+//@TestInstance(Lifecycle.PER_CLASS) //We can limit the object creation of this class 1 only. 
+@TestInstance(Lifecycle.PER_METHOD)	 //Default value. This allows the creation of this class's object 1 time per @Test method is run.
+class CalculatorTest {
+	
+	//If we disab
+	CalculatorTest(){
+		System.out.println("Object Created for CalculatorTest class");
+	}
+	
+	static Calculator c1;
+	
+	@Test
+	 /*Ignore this method while testing or if the test case is too complicated and work under progress. 
+	 Even in the case when developer is still working on the feature or lagging so the tester can keep tests ready.*/
+	@Disabled
+	void testFutureFeatureOrWorkInProgessFeature()
+	{
+		System.out.print("This method will get ignored by the compiler while testing methods");
+	}
+//	Before Any test case is run this will be run first, like establishing connection for entire program at start
+	@BeforeAll		//In older versions:@BeforeClass
+	static void generateCalculatorObject()
+	{
+		c1 = new Calculator();
+		System.out.println("----Started----");
+	}
+	
+//	After everything is done this method will run , like finally . Eg:Closing connections
+	@AfterAll	//In older versions:@AfterClass
+	static void removeCalculatorObject()
+	{
+		c1 = null;
+		System.out.println("----Finished----");
+	}
+
+//	Before each and every test method is run this will execute and then that method will execute. Eg: we want to reset the state of something before every method is run.
+	@BeforeEach	//In older versions:@JustBefore
+	void abc()
+	{
+		System.out.println("Before Each test case this will run");
+	}
+	
+//	After every method is done running we want to run this .
+	@AfterEach	//In older versions:@JustAfter
+	void xyz()
+	{
+		System.out.println("After Each test case this will run");
+	}
+	@Test
+	void test() {
+		assertTrue(true);
+	}
+		
+	@Test
+	@DisplayName("Testing Addition Operation")
+	void testAdd()
+	{
+		Calculator c1 = new Calculator();
+		assertEquals(30,c1.add(10,20), ()->"Sum is not right");
+		assertEquals(50,c1.add(30,20), ()->"Sum is not right");
+		assertEquals(-10,c1.add(10,-20), ()->"Sum is not right");
+		System.out.println("From add method");
+	}
+	
+	//write a note on exception handling here
+	@Test		//In older versions:@Test(expected:ArithmeticException)
+	@DisplayName("Testing Division Operation")
+	void testDiv() throws Exception
+	{
+	    Calculator c1 = new Calculator();
+	    assertEquals(2, c1.div(10, 5));
+	    assertThrows(ArithmeticException.class, () -> c1.div(10, 0));
+	    System.out.println("From div method");
+	}
+	
+	/*The test case whichever will fail,assertAll will not stop the execution there itself and skip all.
+	Rather it will execute all and at the end in the failure stack let us know which all failed. */
+	@Test
+	@DisplayName("Testing Multiplication Operation")
+	
+	void testMul()
+	{
+		System.out.println("From testMulStart() method ");
+		assertAll(
+		()->assertEquals(50, c1.mul(10, 5)),
+		()->assertEquals(25, c1.mul(5, 5)),
+		//()->assertEquals(40, c1.mul(1, 5)), //Failing test case
+		()->assertEquals(125, c1.mul(25, 5)),
+		()->assertEquals(192, c1.mul(32,6)),
+		()->assertEquals(50, c1.mul(5, 10))
+		);
+		System.out.println("From testMulEnd() method");
+	}
+	
+	@Test
+	void testMod()
+	{
+		assertAll(
+				()->assertEquals(2, c1.mod(10, 5)), //this will fail as 10%5 =0
+				()->assertEquals(1, c1.mod(4, 3)),
+				()->assertEquals(0, c1.mod(10, 5)),
+				()->assertEquals(1, c1.mod(45, 4))
+				);
+		
+	}
+	
+	@Test
+	@EnabledForJreRange(min = JRE.JAVA_11, max = JRE.JAVA_17) // Enable this test for java versions 11 to 17
+	void testLambda()
+	{
+		System.out.println("testing for lambda expression");
+	}
+	
+	@Test
+	@EnabledOnJre(value = JRE.JAVA_8) //ONLY on java 8
+	void testLambda2()
+	{
+		System.out.println("testing for lambda expression");
+	}
+	
+	@Test
+	@EnabledOnOs(OS.WINDOWS)
+	void testDll() {
+		System.out.println("Testing DLL Files (ONLY windows has this)");
+	}
+	
+	@Test
+	@EnabledOnOs(value = {OS.MAC,OS.LINUX})
+	void testShellScripts() {
+		System.out.println("Testing DLL Files (ONLY windows has this)");
+	}
+	
+	@Test
+	void testDynamically()
+	{
+		System.out.println("testing Dynamically Started");
+	}
+}

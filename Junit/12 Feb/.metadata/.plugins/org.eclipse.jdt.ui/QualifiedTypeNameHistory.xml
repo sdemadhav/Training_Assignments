@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.TestClassOrder"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.BeforeAll"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.BeforeEach"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.AfterEach"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.AfterAll"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.condition.JRE"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.condition.OS"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.condition.EnabledForJreRange"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.condition.EnabledOnJre"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.condition.EnabledOnOs"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.TestInstance"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.Tag"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.Test"/>
+    <fullyQualifiedTypeName name="com.ParkingTicketGenerator"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.DisplayName"/>
+    <fullyQualifiedTypeName name="java.lang.NullPointerException"/>
+    <fullyQualifiedTypeName name="java.lang.NoSuchMethodException"/>
+    <fullyQualifiedTypeName name="org.junit.jupiter.api.Disabled"/>
+    <fullyQualifiedTypeName name="com.MockitoAssignment"/>
+</qualifiedTypeNameHistroy>

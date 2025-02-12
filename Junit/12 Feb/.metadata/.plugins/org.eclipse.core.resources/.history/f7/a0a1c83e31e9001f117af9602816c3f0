@@ -1,0 +1,17 @@
+package com;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+
+
+class ParkingTicketGeneratorTest {
+
+	@Test
+	@Disabled
+	void test() {
+		assertTrue(true);
+	}
+
+}

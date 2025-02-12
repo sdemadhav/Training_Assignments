@@ -1,0 +1,51 @@
+package com;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+
+class ParkingTicketGeneratorTest {
+	
+	static ParkingTicketGenerator p1 ;
+	private static final String GREETINGS = "Welcome to Parking System";
+
+	@Test
+	@Disabled
+	void test() {
+		assertTrue(true);
+	}
+	@BeforeAll
+	static void generateCalculatorObject()
+	{
+		p1 = new ParkingTicketGenerator();
+		System.out.println("----Started----");
+	}
+	
+	@AfterAll	
+	static void removeCalculatorObject()
+	{
+		p1 = null;
+		System.out.println("----Finished----");
+	}
+
+	
+	@Test
+	@DisplayName("Greetings method")
+	void testGreetings() {
+		assertEquals()));
+	}
+	
+	@Test
+	void testchangeValueOfXto10() {
+		p1.changeValueOfXto10();
+		assertEquals(10, p1.x, "Value mismatch");
+	}
+		
+
+}
