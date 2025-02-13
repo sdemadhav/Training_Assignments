@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.Calculator&apos; to &apos;CalculatorMain&apos;&#x0D;&#x0A;- Original project: &apos;automated-jenkins-polling&apos;&#x0D;&#x0A;- Original element: &apos;com.Calculator&apos;&#x0D;&#x0A;- Renamed element: &apos;com.CalculatorMain&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Calculator&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com{Calculator.java[Calculator" matchStrategy="1" name="CalculatorMain" qualified="false" references="true" similarDeclarations="false" stamp="1739442036577" textual="false" version="1.0"/>
+</session>

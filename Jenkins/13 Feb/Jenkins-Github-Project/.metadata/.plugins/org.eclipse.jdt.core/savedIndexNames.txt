@@ -1,0 +1,4 @@
+INDEX VERSION 1.134+C:\Users\Wissen\Desktop\CoreJava Notes\Jenkins-Github-Project\.metadata\.plugins\org.eclipse.jdt.core
+817775794.index
+1865797976.index
+1391143072.index
