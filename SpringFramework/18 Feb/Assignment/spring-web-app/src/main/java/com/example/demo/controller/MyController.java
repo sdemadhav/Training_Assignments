@@ -2,7 +2,10 @@ package com.example.demo.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.demo.model.Employee;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -44,5 +47,17 @@ public class MyController {
 			mv.setViewName("failure.jsp");
 		}
 		return mv;
+	}
+	
+	@RequestMapping("/register")
+	public String signup() {
+		return "empRegister.html";
+	}
+	@RequestMapping("/register_emp")
+	@ResponseBody
+	public String register(Employee e)
+	{
+		System.out.println(e);
+		return "<h2>successfully Added class</h2>";
 	}
 }
