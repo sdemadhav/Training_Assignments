@@ -23,9 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import jakarta.persistence.EntityManagerFactory;
 
-
-//Not prefferred configuration as we are harcoding every url password and secrets keys for database in java itself so we must pick if from the properties file
-//@Configuration
+@Configuration
 @PropertySource({"classpath:application.properties"})
 @EntityScan(basePackages = {"com.example.model"})  
 @EnableTransactionManagement
@@ -34,18 +32,20 @@ import jakarta.persistence.EntityManagerFactory;
         entityManagerFactoryRef = "postgresEntityManagerFactory",
         transactionManagerRef = "postgresTransactionManager"
 )
-public class PrimaryDBConfig {
+public class PrimaryDBConfig2 {
 	
-
-    @Primary
+	@Primary
+	@Bean(name="postgresDataSourceProperties")
+	@ConfigurationProperties(prefix="first.spring.datasource")
+	public DataSourceProperties  dataSourceProperties() {
+    	return new DataSourceProperties();
+    }
+	
+	@Primary
     @Bean(name = "postgresDataSource")
-    public DataSource postgresDataSource() {
-        return DataSourceBuilder.create()
-                .url("jdbc:postgresql://localhost:5432/primarydb")
-                .driverClassName("org.postgresql.Driver")
-                .username("postgres")
-                .password("tiger")
-                .build();
+    @ConfigurationProperties("spring.datasource.postgres")
+    public DataSource h2DataSource(@Qualifier("postgresDataSourceProperties") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().build();
     }
 
     @Primary

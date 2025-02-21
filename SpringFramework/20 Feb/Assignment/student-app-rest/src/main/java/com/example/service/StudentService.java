@@ -24,7 +24,7 @@ public class StudentService {
     }
 
     public void  saveStudent(Student student) {
-//        studentRepository1.save(student);
+        studentRepository1.save(student);
         studentRepository2.save(student);
     }
 

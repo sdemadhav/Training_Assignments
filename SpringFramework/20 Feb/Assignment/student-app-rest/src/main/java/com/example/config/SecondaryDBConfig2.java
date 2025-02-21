@@ -13,7 +13,6 @@ import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -23,36 +22,33 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import jakarta.persistence.EntityManagerFactory;
 
-
-//Not prefferred configuration as we are harcoding every url password and secrets keys for database in java itself so we must pick if from the properties file
-//@Configuration
+@Configuration
 @PropertySource({"classpath:application.properties"})
 @EntityScan(basePackages = {"com.example.model"})  
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        basePackages = "com.example.repos.p1",
-        entityManagerFactoryRef = "postgresEntityManagerFactory",
-        transactionManagerRef = "postgresTransactionManager"
+        basePackages = "com.example.repos.p2",
+        entityManagerFactoryRef = "postgresEntityManagerFactory2",
+        transactionManagerRef = "postgresTransactionManager2"
 )
-public class PrimaryDBConfig {
-	
+public class SecondaryDBConfig2 {
 
-    @Primary
-    @Bean(name = "postgresDataSource")
-    public DataSource postgresDataSource() {
-        return DataSourceBuilder.create()
-                .url("jdbc:postgresql://localhost:5432/primarydb")
-                .driverClassName("org.postgresql.Driver")
-                .username("postgres")
-                .password("tiger")
-                .build();
+	@Bean(name="postgresDataSourceProperties2")
+	@ConfigurationProperties(prefix="second.spring.datasource")
+	public DataSourceProperties  dataSourceProperties() {
+    	return new DataSourceProperties();
+    }
+	
+    @Bean(name = "postgresDataSource2")
+    @ConfigurationProperties("second.spring.datasource")
+    public DataSource h2DataSource(@Qualifier("postgresDataSourceProperties2") DataSourceProperties properties) {
+        return properties.initializeDataSourceBuilder().build();
     }
 
-    @Primary
-    @Bean(name = "postgresEntityManagerFactory")
+    @Bean(name = "postgresEntityManagerFactory2")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory(
             EntityManagerFactoryBuilder builder,
-            @Qualifier("postgresDataSource") DataSource dataSource) {
+            @Qualifier("postgresDataSource2") DataSource dataSource) {
         Map<String, String> properties = new HashMap<>();
         properties.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         properties.put("hibernate.hbm2ddl.auto", "update");
@@ -64,13 +60,10 @@ public class PrimaryDBConfig {
                 .build();
     }
 
-    @Primary
-    @Bean(name = "postgresTransactionManager")
+    @Bean(name = "postgresTransactionManager2")
     public PlatformTransactionManager transactionManager(
-            @Qualifier("postgresEntityManagerFactory") EntityManagerFactory entityManagerFactory) {
+            @Qualifier("postgresEntityManagerFactory2") EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
-	   
-    
-}
 
+}
