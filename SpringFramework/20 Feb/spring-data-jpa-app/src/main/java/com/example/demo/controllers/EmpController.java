@@ -15,72 +15,56 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entities.Employee;
-import com.example.demo.repos.EmpDao;
+import com.example.demo.services.EmployeeService;
 
 @RestController
 public class EmpController {
 
-	@Autowired
-	EmpDao dao;
-	@GetMapping("/employees")
-	public Iterable<Employee> getEmployees(){
-		return dao.findAll();
-	}
-	 
-	 @GetMapping("/employees/{id}")
-	 public Optional<Employee> getEmployeeById(@RequestParam int id){
-		return dao.findById(id);
-		 
-	 }
-	 
-	 @PostMapping("/employees")
-		public String insertEmployees(@RequestBody Employee e){
-		 if(dao.existsById(e.getEid())) {
-			 return "sorry the employee already exists, choose another ID";
-		 }
-		 dao.save(e);
-			return "Added new Employee Successfully !";
-		}
-	 
-	 @RequestMapping(path = "/update/{id}",method = {RequestMethod.PUT,RequestMethod.PATCH})
-	 public String updateEmployee(@RequestBody Employee e, @PathVariable int id ) {
-		 if(!dao.existsById(id)) {
-			 return "sorry the employee does not exists, choose another ID to update";
-		 }
-		 dao.save(e);
-		 return "Updated record successfully";
-	 }
-	 
-	 @DeleteMapping("/employees/{id}")
-	 public String deleteEmployee(@PathVariable int id ) {
-		 if(!dao.existsById(id)) {
-			 return "sorry the employee does not exists, choose another ID to delete";
-		 }
-		 dao.deleteById(id);
-		 return "Successfully deleted employee record !";
-	 }
-	 
-	 @GetMapping("/employees/custom")
-	 public List<Employee> getCustomQuery(String desig) {
-		return dao.myCustomQuery(desig);
-		 
-	 }
-	 
-	 @GetMapping("/employees/below")
-	 public List<Employee> getEmployeeBelow(int age){
-		 return dao.findByAgeLessThan(age);
-	 }
-	 @GetMapping("/employees/above")
-	 public List<Employee> getEmployeeAbove(int age){
-		 return dao.findByAgeGreaterThan(age);
-	 }
-	 @GetMapping("/employees/role")
-	 public List<Employee> getEmployeeByDesig(String desig){
-		 return dao.getEmployeeByDesignation(desig);
-	 }
-	 
-	 
-	 
-	 
-	
+    @Autowired
+    private EmployeeService employeeService;
+
+    @GetMapping("/employees")
+    public Iterable<Employee> getEmployees() {
+        return employeeService.getEmployees();
+    }
+
+    @GetMapping("/employees/{id}")
+    public Optional<Employee> getEmployeeById(@RequestParam int id) {
+        return employeeService.getEmployeeById(id);
+    }
+
+    @PostMapping("/employees")
+    public String insertEmployee(@RequestBody Employee e) {
+        return employeeService.insertEmployee(e);
+    }
+
+    @RequestMapping(path = "/update/{id}", method = { RequestMethod.PUT, RequestMethod.PATCH })
+    public String updateEmployee(@RequestBody Employee e, @PathVariable int id) {
+        return employeeService.updateEmployee(e, id);
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public String deleteEmployee(@PathVariable int id) {
+        return employeeService.deleteEmployee(id);
+    }
+
+    @GetMapping("/employees/custom")
+    public List<Employee> getCustomQuery(String desig) {
+        return employeeService.getCustomQuery(desig);
+    }
+
+    @GetMapping("/employees/below")
+    public List<Employee> getEmployeeBelow(int age) {
+        return employeeService.getEmployeeBelow(age);
+    }
+
+    @GetMapping("/employees/above")
+    public List<Employee> getEmployeeAbove(int age) {
+        return employeeService.getEmployeeAbove(age);
+    }
+
+    @GetMapping("/employees/role")
+    public List<Employee> getEmployeeByDesig(String desig) {
+        return employeeService.getEmployeeByDesig(desig);
+    }
 }
