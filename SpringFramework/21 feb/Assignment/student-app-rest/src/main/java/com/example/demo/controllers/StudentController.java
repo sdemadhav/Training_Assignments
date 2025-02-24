@@ -134,7 +134,7 @@ public class StudentController {
     }
     
     @GetMapping("/class_teacher")
-    public String getClassTeacher(@RequestParam int reg_no) {
+    public String getClassTeacher(@RequestParam int reg_no) throws StudentNotFoundException {
     	return ss.getClassTeacher(reg_no);
     }
 }

@@ -1,32 +1,52 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name="Teacher")
+@Table(name = "Teacher")
 public class Teacher {
 
-	private String name;
-	@Id
-	private int standard;
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-	public int getStandard() {
+    @Id
+    private int standard;
+    private String name;
+
+    @OneToMany(mappedBy = "teacher")
+    private List<Student> students;
+
+
+    public int getStandard() {
 		return standard;
 	}
+
+
 	public void setStandard(int standard) {
 		this.standard = standard;
 	}
-	@Override
-	public String toString() {
-		return "Teacher [name=" + name + ", standard=" + standard + "]";
+
+
+	public String getName() {
+		return name;
 	}
-	
-	
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+
+	public List<Student> getStudents() {
+		return students;
+	}
+
+
+	public void setStudents(List<Student> students) {
+		this.students = students;
+	}
+
+
+	@Override
+    public String toString() {
+        return "Teacher [name=" + name + ", standard=" + standard + "]";
+    }
 }
