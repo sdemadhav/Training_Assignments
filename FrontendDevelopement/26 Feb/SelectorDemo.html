@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>CSS Selectors</title>
+		<style>
+		p.one{color:red}
+		p.two{color:green}	
+		.three{color:blue}
+		#four{color:purple}
+		span{color:brown}
+		span>span{background-color:lime}
+		p::first-line{color:red}
+		p::first-letter{color:orange;font-size:30px}
+		h1::before{content:'Welcome to Palais Royale Mr./Mrs. '}
+		h1::after{content:', have a pleasant stay:)'}
+		</style>
+	</head>
+	<body>
+		<h1>Reddy</h1>
+		<h1>Singh</h1>
+		<h1>Chidambaram</h1>
+		<p class="one">This is from 1st paragraph</p>
+		<p class="two">This is from 2nd paragraph</p>
+		<p>This is from 3rd paragraph</p>
+		<p id="four">This is from 4th paragraph</p>
+		<p class="three">This is from 5th paragraph</p>
+		<div class="three">This is from DIV Block </div>
+		<br>
+		<span>This is <span>from the</span>SPAN tag </span>
+		<span>This is from SPAN tag </span>
+		<span>This is from SPAN tag </span>
+		<p>This is for the Pseudo Elements Demo.This is for the Pseudo Elements Demo.This is for the Pseudo Elements Demo.This is for the Pseudo Elements Demo.This is for the Pseudo Elements Demo.This is for the Pseudo Elements Demo.</p>
+	</body>
+</html>
