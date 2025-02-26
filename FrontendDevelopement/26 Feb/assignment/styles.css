@@ -1,0 +1,182 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Top Navbar */
+header {
+    background: #004080;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+/* Container Layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 70px; /* Add padding to account for fixed navbar */
+}
+
+/* Sidebar with Differentiation */
+.sidebar {
+    width: 220px;
+    background: #e0e0e0; /* Light gray for contrast */
+    padding-top: 20px;
+    position: fixed;
+    height: calc(100vh - 70px); /* Subtract navbar height */
+    top: 70px; /* Start below the navbar */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    display: block;
+    background: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    background: #004080;
+    color: white;
+}
+
+main {
+    margin-left: 240px;
+    padding: 20px;
+    flex: 1;
+    background: #ffffff;
+    border-left: 2px solid #cccccc;
+}
+
+/* Login Box Centering and Styling */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-box {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    width: 380px;
+    max-width: 90%; /* Adjust width for responsiveness */
+    text-align: center;
+    border: 2px solid #ccc;
+}
+
+/* Form Elements */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin: 8px 0 5px;
+    display: flex;
+    justify-content: space-between; 
+    width: 100%;
+}
+
+input {
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 2px solid #aaa;
+    border-radius: 5px;
+    width: 90%;
+    font-size: 16px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #004080;
+    box-shadow: 0 0 8px rgba(0, 64, 128, 0.5);
+}
+
+button {
+    background: #004080;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+button:hover {
+    background: #003366;
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        width: 90%;
+        max-width: 360px;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    main {
+        margin-left: 0;
+    }
+}
+
+.carousel {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+}
+.service-card {
+    scroll-snap-align: start;
+    flex: 0 0 100%;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.carousel::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.carousel::-webkit-scrollbar-thumb {
+    background: #004080;
+    border-radius: 10px;
+}
+
+.carousel::-webkit-scrollbar-track {
+    background: #e0e0e0;
+}

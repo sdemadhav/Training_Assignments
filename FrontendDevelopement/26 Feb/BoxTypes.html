@@ -1,0 +1,59 @@
+<html>
+    <head>
+        <title>Box Types</title>
+        <style>
+            div.box{
+                width: 150px;
+                height: 100px;
+                background-color: yellow;
+		        border:25px solid red;
+		        padding:20px;
+		        margin:50px;
+            }
+            .my-flex-container
+            {
+                display: flex;
+                background-color: yellow;
+            }
+            .my-flex-container>div{
+                background-color: red;
+		        padding:20px;
+                margin: 10px;
+                color: white;
+            }
+            .my-calculator{
+                display: grid;
+                grid-template-columns: auto auto auto auto;
+                width:170px;
+                padding: 10px;
+            }
+            .my-calculator>div{
+                background-color: #857474;
+                border: 1px solid #ccc;
+                padding: 20px;
+                font-size: 30px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Multiple CSS Box Model</h1>
+        <hr>
+	<div class = "my-flex-container">
+            <div>This is to hold the content with css box model</div>
+            <div>This is to hold the content with css box model</div>
+            <div>This is to hold the content with css box model</div>
+            <div>This is to hold the content with css box model</div>
+    </div>
+    <hr>
+        <h1>CSS Grid Box Model</h1>
+        <hr>
+            <input type="text">
+        <div class="my-calculator">
+            <div>1</div><div>2</div><div>3</div><div>+</div>
+            <div>4</div><div>5</div><div>6</div><div>-</div>
+            <div>7</div><div>8</div><div>9</div><div>*</div>
+            <div>.</div><div>0</div><div>=</div><div>/</div>  
+        </div>
+    </body>
+</html>
