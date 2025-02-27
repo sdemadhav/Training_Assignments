@@ -1,0 +1,85 @@
+/* General Styles */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+/* Top Navbar */
+header {
+    background: #004080;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000; /* Ensure it stays on top */
+}
+
+/* Container Layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+    padding-top: 70px; /* Add padding to account for fixed navbar */
+}
+
+/* Sidebar with Differentiation */
+.sidebar {
+    width: 220px;
+    background: #e0e0e0; /* Light gray for contrast */
+    padding-top: 20px;
+    position: fixed;
+    height: calc(100vh - 70px); /* Subtract navbar height */
+    top: 70px; /* Start below the navbar */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    padding: 12px;
+    text-align: center;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    display: block;
+    background: #e0e0e0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar ul li a:hover {
+    background: #004080;
+    color: white;
+}
+
+main {
+    margin-left: 240px;
+    padding: 20px;
+    flex: 1;
+    background: #ffffff;
+    border-left: 2px solid #cccccc;
+}
+
+.about-content {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.about-content h3 {
+    color: #343a40;
+}
+
+.about-content ul {
+    list-style-type: square;
+    padding-left: 20px;
+}

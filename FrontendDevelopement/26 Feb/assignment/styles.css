@@ -15,25 +15,26 @@ header {
     position: fixed;
     width: 100%;
     top: 0;
-    z-index: 1000; /* Ensure it stays on top */
+    z-index: 1000;
 }
 
 /* Container Layout */
 .container {
     display: flex;
+    flex-direction: column; /* Ensures footer is positioned below */
     min-height: 100vh;
-    padding-top: 70px; /* Add padding to account for fixed navbar */
+    padding-top: 70px;
 }
 
-/* Sidebar with Differentiation */
+/* Sidebar */
 .sidebar {
     width: 220px;
-    background: #e0e0e0; /* Light gray for contrast */
+    background: #e0e0e0;
     padding-top: 20px;
     position: fixed;
-    height: calc(100vh - 70px); /* Subtract navbar height */
-    top: 70px; /* Start below the navbar */
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1); /* Subtle shadow for separation */
+    height: calc(100vh - 70px);
+    top: 70px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 .sidebar ul {
@@ -61,6 +62,7 @@ header {
     color: white;
 }
 
+/* Main Content */
 main {
     margin-left: 240px;
     padding: 20px;
@@ -68,6 +70,79 @@ main {
     background: #ffffff;
     border-left: 2px solid #cccccc;
 }
+
+/* Service Cards */
+.services-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.service-card {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.service-card img {
+    max-width: 100%;
+    border-radius: 10px;
+    height: 200px; /* Fixed height for consistency */
+    object-fit: cover;
+}
+
+.service-card h3 {
+    margin-top: 10px;
+    color: #004080;
+}
+
+.service-card p {
+    color: #555;
+}
+
+/* Footer */
+footer {
+    background: #004080;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: auto; /* Pushes footer to the bottom */
+}
+
+.footer-content a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-content a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    main {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .services-container {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+    }
+}
+
 
 /* Login Box Centering and Styling */
 .login-container {
@@ -130,53 +205,4 @@ button {
 
 button:hover {
     background: #003366;
-}
-
-@media (max-width: 768px) {
-    .login-box {
-        width: 90%;
-        max-width: 360px;
-    }
-
-    .container {
-        flex-direction: column;
-    }
-
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
-
-    main {
-        margin-left: 0;
-    }
-}
-
-.carousel {
-    display: flex;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-}
-.service-card {
-    scroll-snap-align: start;
-    flex: 0 0 100%;
-    box-sizing: border-box;
-    padding: 20px;
-}
-
-.carousel::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-}
-
-.carousel::-webkit-scrollbar-thumb {
-    background: #004080;
-    border-radius: 10px;
-}
-
-.carousel::-webkit-scrollbar-track {
-    background: #e0e0e0;
 }
