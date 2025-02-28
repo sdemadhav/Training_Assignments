@@ -1,7 +1,7 @@
 /* General Styles */
 body, html {
     margin: 0;
-    padding: 0;
+    padding: 40px 0 0; /* Adjusted padding for top navbar */
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
 }
@@ -16,6 +16,16 @@ header {
     width: 100%;
     top: 0;
     z-index: 1000;
+}
+.fraud-warning {
+    background: #ffcc00;
+    color: #333;
+    font-weight: bold;
+    padding: 5px 50px 5px 50px;
+    font-size: 16px;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 /* Container Layout */
@@ -32,8 +42,8 @@ header {
     background: #e0e0e0;
     padding-top: 20px;
     position: fixed;
-    height: calc(100vh - 70px);
-    top: 70px;
+    height: calc(100vh - 85px); 
+    top: 150px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -71,38 +81,6 @@ main {
     border-left: 2px solid #cccccc;
 }
 
-/* Service Cards */
-.services-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 20px;
-    padding: 20px 0;
-}
-
-.service-card {
-    background: white;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.service-card img {
-    max-width: 100%;
-    border-radius: 10px;
-    height: 200px; /* Fixed height for consistency */
-    object-fit: cover;
-}
-
-.service-card h3 {
-    margin-top: 10px;
-    color: #004080;
-}
-
-.service-card p {
-    color: #555;
-}
-
 /* Footer */
 footer {
     background: #004080;
@@ -121,7 +99,7 @@ footer {
     text-decoration: underline;
 }
 
-/* Responsive Adjustments */
+
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -139,7 +117,7 @@ footer {
     }
 
     .services-container {
-        grid-template-columns: 1fr; /* Single column on smaller screens */
+        grid-template-columns: 1fr; 
     }
 }
 
@@ -206,3 +184,4 @@ button {
 button:hover {
     background: #003366;
 }
+

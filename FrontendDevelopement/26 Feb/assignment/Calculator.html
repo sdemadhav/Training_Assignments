@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Calculator - Our Bank</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/calculatorstyle.css">
+</head>
+<body>
+
+    <header>
+        <h1>About Our Bank</h1>
+        <p>Banking at your doorstep</p>
+        <marquee class="fraud-warning">
+            ⚠️ Never share your OTP, PIN, or account details with anyone. Our bank will never ask for such information! Stay alert, stay safe! 🔒
+        </marquee>
+    </header>
+
+    <div class="container">
+        <nav class="sidebar">
+            <ul>
+                <li><a href="OurBank.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="netbanking.html">NetBanking</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="calculator-container">
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab('loan')">Loan Calculator</div>
+                    <div class="tab" onclick="showTab('deposit')">Deposit Calculator</div>
+                </div>
+
+                <div id="calculator-content"></div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Our Bank. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelector(`[onclick="showTab('${tabId}')"]`).classList.add('active');
+            
+            if (tabId === 'loan') {
+                loadLoanCalculator();
+            } else {
+                loadDepositCalculator();
+            }
+        }
+
+        function loadLoanCalculator() {
+            document.getElementById('calculator-content').innerHTML = `
+                <div class="tab-content active">
+                    <h3>Loan Calculator</h3>
+                    <label>Applicant Name:</label>
+                    <input type="text" placeholder="Enter your name">
+
+                    <label>Loan Type:</label>
+                    <select id="loanType" onchange="updateInterestAndLimits()">
+                        <option value="home">Home Loan</option>
+                        <option value="car">Car Loan</option>
+                        <option value="personal">Personal Loan</option>
+                    </select>
+
+                    <label>Interest Rate (%):</label>
+                    <input type="text" id="interestRate" value="9%" disabled>
+
+                    <label>Tenure (Years):</label>
+                    <input type="number" id="loanTenure" placeholder="Enter tenure">
+                    <span class="error" id="loanTenureError"></span>
+
+                    <label>Amount:</label>
+                    <input type="number" id="loanAmount" placeholder="Enter loan amount">
+                    <span class="error" id="loanAmountError"></span>
+
+                    <button class="calculate-btn" onclick="calculateEMI()">Calculate EMI</button>
+                    <h4>EMI: <span id="emiResult">---</span></h4>
+                </div>
+            `;
+            updateInterestAndLimits();
+        }
+
+        function loadDepositCalculator() {
+            document.getElementById('calculator-content').innerHTML = `
+                <div class="tab-content active">
+                    <h3>Deposit Calculator</h3>
+                    <label>Principal Amount:</label>
+                    <input type="number" id="depositPrincipal" placeholder="Enter principal amount">
+
+                    <label>Tenure (Years):</label>
+                    <input type="number" id="depositTenure" placeholder="Enter tenure (max 10 years)">
+                    <span class="error" id="depositTenureError"></span>
+
+                    <label>Interest Rate (%):</label>
+                    <input type="text" value="7%" disabled>
+
+                    <button class="calculate-btn" onclick="calculateMaturity()">Calculate Maturity Amount</button>
+                    <h4>Maturity Amount: <span id="maturityResult">---</span></h4>
+                </div>
+            `;
+        }
+
+        function updateInterestAndLimits() {
+            let loanType = document.getElementById("loanType").value;
+            let interestRates = { "home": 9, "car": 11, "personal": 15 };
+            let maxTenure = { "home": 30, "car": 7, "personal": 5 };
+            let amountLimits = {
+                "home": [500000, 100000000],
+                "car": [100000, 5000000],
+                "personal": [50000, 4000000]
+            };
+
+            document.getElementById("interestRate").value = interestRates[loanType] + "%";
+            document.getElementById("loanTenure").setAttribute("max", maxTenure[loanType]);
+            document.getElementById("loanTenure").placeholder = `Enter tenure (Max: ${maxTenure[loanType]} years)`;
+            document.getElementById("loanAmount").setAttribute("min", amountLimits[loanType][0]);
+            document.getElementById("loanAmount").setAttribute("max", amountLimits[loanType][1]);
+            document.getElementById("loanAmount").placeholder = `₹${amountLimits[loanType][0]} - ₹${amountLimits[loanType][1]}`;
+        }
+
+        function calculateEMI() {
+            let amount = parseFloat(document.getElementById("loanAmount").value);
+            let tenure = parseInt(document.getElementById("loanTenure").value);
+            let interestRate = parseFloat(document.getElementById("interestRate").value) / 100;
+            let maxTenure = parseInt(document.getElementById("loanTenure").getAttribute("max"));
+            let minAmount = parseInt(document.getElementById("loanAmount").min);
+            let maxAmount = parseInt(document.getElementById("loanAmount").max);
+
+            if (tenure > maxTenure) {
+                document.getElementById("loanTenureError").innerText = `Max allowed tenure: ${maxTenure} years`;
+                return;
+            }
+            if (amount < minAmount || amount > maxAmount) {
+                document.getElementById("loanAmountError").innerText = `Amount must be between ₹${minAmount} - ₹${maxAmount}`;
+                return;
+            }
+
+            let monthlyRate = interestRate / 12;
+            let months = tenure * 12;
+            let emi = (amount * monthlyRate * Math.pow(1 + monthlyRate, months)) / (Math.pow(1 + monthlyRate, months) - 1);
+
+            document.getElementById("emiResult").innerText = `₹${emi.toFixed(2)}`;
+        }
+
+        function calculateMaturity() {
+            let principal = parseFloat(document.getElementById("depositPrincipal").value);
+            let tenure = parseInt(document.getElementById("depositTenure").value);
+            let rate = 7 / 100;
+            let maturity = principal * Math.pow(1 + rate, tenure);
+
+            document.getElementById("maturityResult").innerText = `₹${maturity.toFixed(2)}`;
+        }
+
+        window.onload = loadLoanCalculator;
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+    <head>
+        <title>Learning BOM in HTML</title>
+        <script>
+            function closePage() {
+                var flag = window.confirm("Are you sure you want to close this page?");
+                if (flag) {
+                    window.close();
+                }
+            }
+            function greet() {
+                var name = window.prompt("Enter your name: ");
+                document.write("<h2>Welcome ! "+name+"</h2>");
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Browser Object Model</h1>
+        <hr>
+        <h2>Window Object</h2>
+        <script>
+            document.write("window is the root object of the browser object model");
+            //window.alert("Good Morning Everyone !");
+        </script>
+        <br><br>
+        <input type="button" value="Close Page" onclick="closePage()">
+        <input type="button" value="Greet" onclick="greet()">
+        <br><br>
+        <hr>
+        <h2>Screen Object</h2>
+        <script>
+            document.write("screen object contains information about the user's screen");
+            document.write("<br>Width: "+screen.width);
+            document.write("<br>Height: "+screen.height);
+            document.write("<br>Color Depth: "+screen.colorDepth);
+            document.write("<br>Pixel Depth: "+screen.pixelDepth);
+        </script>
+        <br><br>
+        <hr>
+        <h2>Location Object</h2>
+        <script>
+            document.write("location object contains information about the current URL");
+            document.write("<br>URL: "+location.href);
+            document.write("<br>Hostname: "+location.hostname);
+            document.write("<br>Pathname: "+location.pathname);
+            document.write("<br>Protocol: "+location.protocol);
+            //location.assign("https://www.facebook.com"); //redirect to facebook without clicking anything
+            function goToFacebook() {
+                location.assign("https://www.facebook.com");
+            }
+            document.write('<br><input type="button" value="Go to Facebook" onclick="goToFacebook()">');
+
+
+        </script>
+        <br><br>
+        <hr>
+        <h2>History Object</h2>
+        <script>
+            document.write("history object contains the browser's history");
+            document.write("<br>Length: "+history.length);
+            //history.back();
+            //history.forward();
+        </script>
+        <br><br>
+        <hr>
+        <h2>Navigator Object</h2>
+        <script>
+            document.write("navigator object contains information about the browser");
+            document.write("<br>App Name: "+navigator.appName);
+            document.write("<br>App Version: "+navigator.appVersion);
+            document.write("<br>Platform: "+navigator.platform);
+            document.write("<br>Language: "+navigator.language);
+        </script>
+        <hr>
+        <h3>Thank You for your attention !</h3>    
+    </body>
+</html>
+

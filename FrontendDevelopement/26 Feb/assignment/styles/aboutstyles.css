@@ -1,0 +1,15 @@
+.about-content {
+    background-color: #e9ecef;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.about-content h3 {
+    color: #343a40;
+}
+
+.about-content ul {
+    list-style-type: square;
+    padding-left: 20px;
+}
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM Demo</title>
+    <script>
+        function greetUser1(fname,lname) {
+            alert("Hello " + fname + " " + lname+"from greetUser1");
+        }
+        function greetUser2() {
+            var fname = document.getElementsByName("t1")[0].value;
+            var lname = document.getElementsByName("t2")[0].value;
+            alert("Hello " + fname + " " + lname+"from greetUser2");
+        }
+
+        function greetUser3() {
+            var fname = document.getElementById("i1").value;
+            var lname = document.getElementById("i2").value;            
+            alert("Hello " + fname + " " + lname+"from greetUser3");
+        }
+
+        function greetUser4(){
+            var fname = document.forms[0].t1.value;
+            var lname = document.forms[0].t2.value;
+            alert("Hello " + fname + " " + lname+"from greetUser4");
+        }
+
+        function greetUser5(){
+            var fname = document.f1.t1.value;
+            var lname = document.f1.t2.value;
+            alert("Hello " + fname + " " + lname+"from greetUser5");
+        }
+    </script>
+</head>
+<body>
+    <h1>DOM Demo</h1>
+    <hr>
+    <h2>Greet User</h2>
+    <form>
+    <h3>
+        Firstname: <input type="text" name="t1"><br>
+        Lastname : <input type="text" name="t2"><br>
+        <input type="button" value="Submit 1" onclick="greetUser(t1.value,t2.value)">
+        <input type="button" value="Submit 2" onclick="greetUser2()">
+        <input type="button" value="Submit 3" onclick="greetUser3()">
+        <input type="button" value="Submit 4" onclick="greetUser4()">
+        <input type="button" value="Submit 5" onclick="greetUser5()">
+        <br><br>
+    </h3>
+</form>
+</body>
+</html>
