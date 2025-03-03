@@ -52,3 +52,19 @@ input, select {
 .error {
     color: red;
 }
+
+#emiResult {
+    font-size: 2rem; 
+    font-weight: bold; 
+    color: #007bff; 
+    display: block; 
+    margin-top: 10px;
+}
+
+#maturityResult{
+    font-size: 2rem; 
+    font-weight: bold; 
+    color: #007bff; 
+    display: block; 
+    margin-top: 10px;
+}
