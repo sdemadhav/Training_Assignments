@@ -115,54 +115,109 @@
     </div>
 
     <script>
-        let employees = [];
-        let idCounter = 1;
-
-        function addEmployee() {
+        const API_URL = "http://localhost:8080/employees"; 
+    
+        document.addEventListener("DOMContentLoaded", fetchEmployees);
+    
+        async function fetchEmployees() {
+            try {
+                let response = await fetch(API_URL);
+                let employees = await response.json();
+                renderEmployees(employees);
+            } catch (error) {
+                console.error("Error fetching employees:", error);
+            }
+        }
+    
+        async function addEmployee() {
             let name = document.getElementById('empName').value;
             let role = document.getElementById('empRole').value;
             let salary = document.getElementById('empSalary').value;
-            if (name && salary) {
-                employees.push({ id: idCounter++, name, role, salary: parseFloat(salary) });
-                document.getElementById('empName').value = '';
-                document.getElementById('empSalary').value = '';
-                renderEmployees();
+    
+            if (!name || !salary) {
+                alert("Name and Salary are required!");
+                return;
+            }
+    
+            let employee = { name, role, salary: parseFloat(salary) };
+    
+            try {
+                let response = await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(employee),
+                });
+    
+                if (response.ok) {
+                    fetchEmployees(); 
+                    document.getElementById('empName').value = '';
+                    document.getElementById('empSalary').value = '';
+                } else {
+                    console.error("Failed to add employee:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
         }
-
-        function deleteEmployee(id) {
-            employees = employees.filter(emp => emp.id !== id);
-            renderEmployees();
+    
+        async function deleteEmployee(id) {
+            try {
+                let response = await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+    
+                if (response.ok) {
+                    fetchEmployees();
+                } else {
+                    console.error("Failed to delete employee:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
         }
-
-        function updateEmployee(id) {
+    
+        async function updateEmployee(id) {
             let newSalary = prompt("Enter new salary:");
-            if (newSalary) {
-                employees = employees.map(emp => emp.id === id ? { ...emp, salary: parseFloat(newSalary) } : emp);
-                renderEmployees();
+            if (!newSalary) return;
+    
+            try {
+                let response = await fetch(`${API_URL}/${id}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ salary: parseFloat(newSalary) }),
+                });
+    
+                if (response.ok) {
+                    fetchEmployees(); 
+                } else {
+                    console.error("Failed to update employee:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
         }
-
-        function searchEmployee() {
+    
+        async function searchEmployee() {
             let query = document.getElementById('searchBox').value.toLowerCase();
             let searchBy = document.getElementById('searchBy').value;
-            let filteredEmployees = employees.filter(emp => 
-                searchBy === 'id' ? emp.id.toString().includes(query) : 
-                searchBy === 'name' ? emp.name.toLowerCase().includes(query) :
-                emp.role.toLowerCase().includes(query)
-            );
-            renderEmployees(filteredEmployees);
+    
+            try {
+                let response = await fetch(`${API_URL}?search=${query}&searchBy=${searchBy}`);
+                let filteredEmployees = await response.json();
+                renderEmployees(filteredEmployees);
+            } catch (error) {
+                console.error("Error searching employees:", error);
+            }
         }
-
-        function renderEmployees(filteredList = employees) {
+    
+        function renderEmployees(employeeList) {
             let tableBody = document.getElementById('employeeTable');
             tableBody.innerHTML = '';
-            filteredList.forEach(emp => {
+    
+            employeeList.forEach(emp => {
                 let row = `<tr>
                     <td>${emp.id}</td>
                     <td>${emp.name}</td>
                     <td>${emp.role}</td>
-                    <td>$${emp.salary}</td>
+                    <td>₹${emp.salary}</td>
                     <td>
                         <button class='update-btn' onclick='updateEmployee(${emp.id})'>Update</button>
                         <button class='delete-btn' onclick='deleteEmployee(${emp.id})'>Delete</button>
@@ -171,6 +226,6 @@
                 tableBody.innerHTML += row;
             });
         }
-    </script>
+    </script>    
 </body>
 </html>

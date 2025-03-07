@@ -1,0 +1,16 @@
+<div class="currency-container">
+    <h2>Currency Converter</h2>
+  
+    <label for="amount">Enter Amount (INR):</label>
+    <input type="number" id="amount" [(ngModel)]="amountInINR" />
+  
+    <p><strong>Amount in INR:</strong> {{ amountInINR | currency:'INR' }}</p>
+  
+    <div class="result" *ngIf="amountInINR !== null">
+      <p><strong>Amount in USD:</strong> {{ amountInINR | currencyPipe:'USD' }}</p>
+      <p><strong>Amount in JPY:</strong> {{ amountInINR | currencyPipe:'JPY' }}</p>
+      <p><strong>Amount in SAR:</strong> {{ amountInINR | currencyPipe:'SAR' }}</p>
+      <p><strong>Amount in EUR:</strong> {{ amountInINR | currencyPipe:'EUR' }}</p>
+    </div>
+  </div>
+  

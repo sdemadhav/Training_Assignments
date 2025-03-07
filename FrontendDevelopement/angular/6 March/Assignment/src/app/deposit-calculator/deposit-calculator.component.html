@@ -1,0 +1,22 @@
+<div class="deposit-container">
+    <h2>Deposit Calculator</h2>
+  
+    <label for="applicantName">Applicant Name:</label>
+    <input type="text" id="applicantName" [(ngModel)]="applicantName" (input)="onInputChange()" />
+
+    <label for="amount">Principal Amount:</label>
+    <input type="number" id="principal_amount" [(ngModel)]="principal_amount" (input)="onInputChange()" />
+
+    <label for="tenure">Tenure (Years):</label>
+    <input type="number" id="tenure" [(ngModel)]="tenure" (input)="onInputChange()" />
+  
+    <label for="interestRate">Interest Rate:</label>
+    <input type="text" id="interestRate" [(ngModel)]="interestRate" readonly />
+
+    <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+  
+    <div *ngIf="maturityAmount !== null">
+      <h3>maturityAmount: {{ maturityAmount | currency:'INR' }}</h3>
+    </div>
+  </div>
+  

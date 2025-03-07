@@ -1,0 +1,65 @@
+/* Tabs Styling */
+.tabs {
+    display: flex;
+    border-bottom: 2px solid #ccc;
+  }
+  
+  .tabs button {
+    padding: 10px 20px;
+    cursor: pointer;
+    border: none;
+    background: #f4f4f4;
+    flex: 1;
+    font-size: 16px;
+  }
+  
+  .tabs button.active {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Content Area */
+  .content {
+    padding: 20px;
+    border: 1px solid #ddd;
+    min-height: 200px;
+  }
+  
+  /* Sidebar Layout */
+  .flex-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 200px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-right: 2px solid #ddd;
+  }
+  
+  .sidebar h4 {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar button {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    border: none;
+    background: #e0e0e0;
+  }
+  
+  .sidebar button.active {
+    background: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .sidebar-content {
+    flex: 1;
+    padding: 20px;
+  }
+  

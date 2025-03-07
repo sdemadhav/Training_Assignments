@@ -1,0 +1,13 @@
+div{
+    width:150px;
+    height:150px;
+    padding:20px;
+}
+
+.brdr{
+    border:20px solid crimson;
+}
+
+.bg{
+    background-color: yellow;
+}

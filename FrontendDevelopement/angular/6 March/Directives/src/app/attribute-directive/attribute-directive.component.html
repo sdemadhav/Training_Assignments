@@ -1,0 +1,25 @@
+<h2>Attribute Directive Demo</h2>
+<h3>
+    <div class="brdr">
+        Just For ngClass Directive Demo Purpose Created brdr block.
+    </div>
+    <div class="bg">
+        Just For ngClass Directive Demo Demo Purpose Created bg block.
+    </div>
+    <div class="brdr bg">
+        Just For ngClass Directive Demo Demo Purpose Created brdr bg block.
+    </div>
+    <br>
+    <div [ngClass]="{brdr: brdrColor, bg: bgColor}">
+    </div>
+    <button (click)="toggleBorderColor()">Border</button>
+    <button (click)="toggleBgColor()">Background</button>
+</h3>
+
+<h3>
+    <div [ngStyle]="{'background-color': color}">
+
+       <input type="text" #mc>
+       <button (click)="setColor(mc.value)">Set Color</button>
+    </div>
+</h3>

@@ -1,0 +1,45 @@
+<div class="tabs-container">
+    <div class="tabs">
+      <button [ngClass]="{'active': selectedTab === 'CircleCalc'}" (click)="selectTab('CircleCalc')">
+        CircleCalc
+      </button>
+      <button [ngClass]="{'active': selectedTab === 'CurrencyConverter'}" (click)="selectTab('CurrencyConverter')">
+        CurrencyConverter
+      </button>
+      <button [ngClass]="{'active': selectedTab === 'LoanDepositMutualFund'}" (click)="selectTab('LoanDepositMutualFund')">
+        Loan Deposit Mutual Fund Calc
+      </button>
+    </div>
+
+    <div class="content">
+      <div *ngIf="selectedTab === 'CircleCalc'">  
+        <app-circle></app-circle>
+      </div>
+  
+      <div *ngIf="selectedTab === 'CurrencyConverter'">
+        <app-currency-converter></app-currency-converter>
+      </div>
+  
+      <div *ngIf="selectedTab === 'LoanDepositMutualFund'" class="flex-container">
+        <div class="sidebar">
+          <h4>Select Calculation Type</h4>
+          <button (click)="selectSidebarOption('Loan')" [ngClass]="{'active': selectedSidebarOption === 'Loan'}">Loan</button>
+          <button (click)="selectSidebarOption('Deposit')" [ngClass]="{'active': selectedSidebarOption === 'Deposit'}">Deposit</button>
+          <button (click)="selectSidebarOption('MutualFund')" [ngClass]="{'active': selectedSidebarOption === 'MutualFund'}">Mutual Fund</button>
+        </div>
+
+        <div class="sidebar-content">
+          <div *ngIf="selectedSidebarOption === 'Loan'">
+            <app-loan-calculator></app-loan-calculator>
+          </div>
+          <div *ngIf="selectedSidebarOption === 'Deposit'">
+            <app-deposit-calculator></app-deposit-calculator>
+          </div>
+          <div *ngIf="selectedSidebarOption === 'MutualFund'">
+            <app-mutual-funds-calculator></app-mutual-funds-calculator>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
