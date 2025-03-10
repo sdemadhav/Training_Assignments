@@ -1,0 +1,43 @@
+<div class="register-container">
+    <h2>Register</h2>
+  
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+      <label for="customerId">Customer ID:</label>
+      <input type="text" id="customerId" formControlName="customerId" />
+      <p class="error" *ngIf="f.customerId.invalid && (f.customerId.dirty || submitted)">
+        Customer ID must be exactly 7 digits.
+      </p>
+
+      <label for="username">Username:</label>
+      <input type="text" id="username" formControlName="username" />
+      <p class="error" *ngIf="f.username.invalid && (f.username.dirty || submitted)">
+        Username must be at least 5 characters and contain no numbers.
+      </p>
+  
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" formControlName="password" />
+      <p class="error" *ngIf="f.password.invalid && (f.password.dirty || submitted)">
+        Password must be at least 8 characters long, with 1 uppercase, 1 lowercase, and 1 special character.
+      </p>
+
+      <label for="confirmPassword">Confirm Password:</label>
+      <input type="password" id="confirmPassword" formControlName="confirmPassword" />
+      <p class="error" *ngIf="registerForm.hasError('mismatch') && submitted">
+        Passwords do not match.
+      </p>
+
+      <label for="accountNo">Account Number:</label>
+      <input type="text" id="accountNo" formControlName="accountNo" />
+      <p class="error" *ngIf="f.accountNo.invalid && (f.accountNo.dirty || submitted)">
+        Account Number must be at least 6 digits.
+      </p>
+  
+      <button type="submit" [disabled]="registerForm.invalid">Register</button>
+    </form>
+  
+
+    <p *ngIf="submitted && registerForm.valid" class="success">Registration Successful!</p>
+  </div>
+  

@@ -1,0 +1,11 @@
+<h2>Kalupur Banking Services</h2>
+<h3><i>Access World-Class Banking Services!</i></h3>
+
+<ng-container *ngIf="!isRegistered(); else homePage">
+  <app-login></app-login>
+  <app-register></app-register>
+</ng-container>
+
+<ng-template #homePage>
+  <app-home></app-home>
+</ng-template>

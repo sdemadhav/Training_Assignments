@@ -1,0 +1,20 @@
+h1{
+    color: #f5f6f8;
+    font-size: 2em;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background-color: #3c5c85;
+    padding: 10px;
+    margin-bottom: 20px;
+
+}
+
+a{
+    color: #080e1b;
+    text-decoration: none;
+    font-size: 1.2em;
+    margin-right: 10px;
+    margin-left: 10px;
+
+}
