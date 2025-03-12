@@ -1,0 +1,13 @@
+h1{
+    color:red;
+    text-align: center;
+}
+h2{
+    color:blue;
+    text-align:center;
+}
+span{
+    color:green;
+    text-align:center;
+    font-size: 50px;
+}
