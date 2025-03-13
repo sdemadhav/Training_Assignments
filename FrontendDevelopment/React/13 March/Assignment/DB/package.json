@@ -1,0 +1,14 @@
+{
+  "name": "assignment",
+  "version": "1.0.0",
+  "description": "JsonServer for Ecommerce app",
+  "main": "server.js",
+  "scripts": {
+    "json-server":"json-server -p 4000 --watch EcommerceDB.json"
+  },
+  "author": "Madhav Jha",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^1.0.0-beta.3"
+  }
+}
