@@ -1,160 +1,52 @@
 {
-    "products": [
+  "products": [
+    {
+      "id": 2,
+      "title": "Mens Casual Premium Slim Fit T-Shirts",
+      "category": "men's clothing",
+      "image": "https://fakestoreapi.com/img/71-3HjOadlL._AC_SY879._SX._UX._SY._UY_.jpg",
+      "vendors": [
         {
-            "id": 1,
-            "title": "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-            "price": 109.95,
-            "category": "men's clothing",
-            "image": "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-            "rating": {
-                "rate": 3.9,
-                "count": 120
-            }
+          "vendorRegId": 14379,
+          "price": 22.3,
+          "stock": 259,
+          "rating": { "rate": 4.1, "count": 259 }
         },
         {
-            "id": 2,
-            "title": "Mens Casual Premium Slim Fit T-Shirts ",
-            "price": 22.3,
-            "category": "men's clothing",
-            "image": "https://fakestoreapi.com/img/71-3HjOadlL._AC_SY879._SX._UX._SY._UY_.jpg",
-            "rating": {
-                "rate": 4.1,
-                "count": 259
-            }
-        },
-        {
-            "id": 3,
-            "title": "Mens Cotton Jacket",
-            "price": 55.99,
-            "category": "men's clothing",
-            "image": "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg",
-            "rating": {
-                "rate": 4.7,
-                "count": 500
-            }
-        },
-        {
-            "id": 4,
-            "title": "John Hardy Women's Legends Naga Gold & Silver Dragon Station Chain Bracelet",
-            "price": 695,
-            "category": "jewelery",
-            "image": "https://fakestoreapi.com/img/71pWzhdJfL._AC_UL640_QL65_ML3_.jpg",
-            "rating": {
-                "rate": 4.6,
-                "count": 400
-            }
-
-        },
-        {
-            "id": 5,
-            "title": "Solid Gold Petite Micropave ",
-            "price": 68,
-            "category": "jewelery",
-            "image": "https://fakestoreapi.com/img/61sbMiUnoGL._AC_UL640_QL65_ML3_.jpg",
-            "rating": {
-                "rate": 3.9,
-                "count": 70
-            }
-        },
-        {
-            "id": 6,
-            "title": "White Gold Plated Princess",
-            "price": 9.99,
-            "category": "jewelery",
-            "image": "https://fakestoreapi.com/img/71pWzhdJfL._AC_UL640_QL65_ML3_.jpg",
-            "rating": {
-                "rate": 4.4,
-                "count": 39
-            }
-        },
-        {
-            "id": 7,
-            "title": "Pierced Owl Rose Gold Plated Stainless Steel Double",
-            "price": 10.99,
-            "category": "jewelery",
-            "image": "https://fakestoreapi.com/img/51UDEzMJVpL._AC_UL640_QL65_ML3_.jpg",
-            "rating": {
-                "rate": 4.1,
-                "count": 82
-            }
-        },
-        {
-            "id": 8,
-            "title": "WD 2TB Black My Passport Ultra Portable External Hard Drive - USB 3.0",
-            "price": 139,
-            "category": "electronics",
-            "image": "https://fakestoreapi.com/img/61U7T1koQcL._AC_SX679_.jpg",
-            "rating": {
-                "rate": 4.3,
-                "count": 301
-            }
-        },
-        {
-            "id": 9,
-            "title": "Acer SB220Q bi 21.5 inches Full HD (1920 x 1080) IPS Ultra-Thin",
-            "price": 599.99,
-            "category": "electronics",
-            "image": "https://fakestoreapi.com/img/71kr3sdLQcL._AC_UL640_QL65_ML3_.jpg",
-            "rating": {
-                "rate": 4.1,
-                "count": 251
-            }
-        },
-        {
-            "id": 10,
-            "title": "HP Pavilion Gaming Desktop",
-            "price": 1099,
-            "category": "electronics",
-            "image": "https://fakestoreapi.com/img/61UOQVpT-qL._AC_SX679_.jpg",
-            "rating": {
-                "rate": 4.3,
-                "count": 122
-            }
-        },
-        {
-            "id": 11,
-            "title": "Dell XPS 13 9310, 13.4- inch FHD Laptop",
-            "price": 1459.99,
-            "category": "electronics",
-            "image": "https://fakestoreapi.com/img/81VTpkh4VgL._AC_SX679_.jpg",
-            "rating": {
-                "rate": 4.4,
-                "count": 176
-            }
-        },
-        {
-            "id": 12,
-            "title": "SanDisk Extreme 1TB Portable NVMe SSD",
-            "price": 229,
-            "category": "electronics",
-            "image": "https://fakestoreapi.com/img/61UOQVpT-qL._AC_SX679_.jpg",
-            "rating": {
-                "rate": 4.6,
-                "count": 119
-            }
-        },
-        {
-            "id": 13,
-            "title": "2020 Apple MacBook Pro with 2.0GHz Intel Core i5 Processor",
-            "price": 1599.99,
-            "category": "electronics",
-            "image": "https://fakestoreapi.com/img/71Z3pkZFCrL._AC_SX679_.jpg",
-            "rating": {
-                "rate": 4.5,
-                "count": 100
-            }
-        },
-        {
-            "id": 14,
-            "title": "LG 27UK850-W 27 Nano IPS UHD 5K Monitor with HDR",
-            "price": 799.99,
-            "category": "electronics",
-            "image": "https://fakestoreapi.com/img/71NyAHSPNwL._AC_SX679_.jpg",
-            "rating": {
-                "rate": 4.5,
-                "count": 59
-            }
+          "vendorRegId": 14380,
+          "price": 21.5,
+          "stock": 150,
+          "rating": { "rate": 4.0, "count": 150 }
         }
-    ]
-
+      ]
+    }
+  ],
+  "Vendors": [
+    {
+      "id": 2,
+      "Name": "Microsoft India",
+      "RegisterationId": 14379,
+      "Email": "microsoft@example.com",
+      "Address": {
+        "street": "102, Delliington Street",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "zip": "400054"
+      },
+      "Phone": "1234567890"
+    },
+    {
+      "id": 3,
+      "Name": "Google India",
+      "RegisterationId": 14380,
+      "Email": "google@example.com",
+      "Address": {
+        "street": "102, Delliington Street",
+        "city": "Mumbai",
+        "state": "Maharashtra",
+        "zip": "400054"
+      },
+      "Phone": "1234567890"
+    }
+  ]
 }

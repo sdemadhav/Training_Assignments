@@ -1,0 +1,35 @@
+.vendor-profile {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .vendor-title {
+    text-align: center;
+    color: #007bff;
+  }
+  
+  .vendor-subtitle {
+    margin-top: 15px;
+    color: #333;
+  }
+  
+  .vendor-details, .vendor-address {
+    padding: 10px;
+    background: #ffffff;
+    border-radius: 5px;
+    margin-top: 10px;
+  }
+  
+  .vendor-info {
+    margin: 8px 0;
+    font-size: 16px;
+  }
+  
+  .vendor-info strong {
+    color: #333;
+  }
+  

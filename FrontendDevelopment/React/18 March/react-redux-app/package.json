@@ -1,5 +1,5 @@
 {
-  "name": "ecommerce-app",
+  "name": "react-redux-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -10,7 +10,6 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^7.3.0",
     "react-scripts": "5.0.1",
     "redux": "^5.0.1",
     "web-vitals": "^2.1.4"
@@ -19,8 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "server-json": "json-server -p 4000 --watch"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [

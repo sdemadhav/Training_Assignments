@@ -2,18 +2,19 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./ProductStyle.css";
 import UpdateProduct from "./UpdateProduct";
+import { Link } from "react-router-dom";
 
 function Products() {
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editId, setEditId] = useState(null);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     axios
       .get("http://localhost:4000/products")
       .then((res) => {
-        console.log(res.data);
         setProducts(res.data || []);
         setLoading(false);
       })
@@ -28,8 +29,21 @@ function Products() {
     setEditId(id);
   };
 
+  const handleCloseUpdate = () => {
+    setEditId(null);
+  };
+
   const handleDelete = (id) => {
-    console.log("Delete product with ID:", id);
+    axios
+      .delete(`http://localhost:4000/products/${id}`)
+      .then(() => {
+        setProducts((prevProducts) =>
+          prevProducts.filter((product) => product.id !== id)
+        );
+      })
+      .catch((err) => {
+        console.error("Error deleting product:", err);
+      });
   };
 
   if (loading) return <p className="text-center">Loading...</p>;
@@ -41,32 +55,20 @@ function Products() {
       <table>
         <thead>
           <tr>
-            <th>Id</th>
             <th>Name</th>
             <th>Price ($)</th>
             <th>Category</th>
             <th>Actions</th>
+            <th>Order</th>
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
             <tr key={product.id}>
-              <td>
-                <button
-                  className="action-btn update-btn"
-                  onClick={() => {
-                    handleUpdate(product.id);
-                    const updateProduct = document.getElementById("update-product");
-                    if (updateProduct) {
-                      updateProduct.scrollIntoView({ behavior: "smooth" });
-                    }
-                  }}
-                >
-                  Update
-                </button>
-              </td>
               <td>{product.title}</td>
-              <td>{product.price}</td>
+              <td>
+                {Math.min(...product.vendors.map(vendor => vendor.price))}
+              </td>
               <td>{product.category}</td>
               <td>
                 <button
@@ -82,14 +84,23 @@ function Products() {
                   Delete
                 </button>
               </td>
+              <td>
+                <button className="action-btn order-btn">
+                  <Link to={`/products/${product.id}`}>Order</Link>
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>
       </table>
-      {editId && <UpdateProduct product={products.find((p) => p.id === editId)} />}
+      {editId && (
+        <UpdateProduct
+          product={products.find((p) => p.id === editId)}
+          onClose={handleCloseUpdate}
+        />
+      )}
     </div>
   );
 }
 
 export default Products;
-

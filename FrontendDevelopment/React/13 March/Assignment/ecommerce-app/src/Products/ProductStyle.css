@@ -1,0 +1,83 @@
+
+.container {
+  width: 70%;
+  margin: 20px auto;
+  font-family: 'Roboto', sans-serif;
+  color: #ffffff;
+  background: linear-gradient(135deg, #1f1f7a, #64b5f6);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2); 
+}
+
+h3 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #ffeb3b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #2c3e50; 
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+thead {
+  background: linear-gradient(135deg, #0073e6, #64b5f6); 
+  color: white;
+  text-align: left;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+
+th, td {
+  padding: 12px;
+  border-bottom: 1px solid #444;
+  font-size: 15px;
+}
+
+td {
+  color: #e0e0e0; 
+}
+
+tr:hover {
+  background-color: #3e5c70; 
+}
+
+
+.action-btn {
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 8px; 
+  margin-right: 5px;
+  margin-top: 5px;
+}
+
+.update-btn {
+  background: linear-gradient(135deg, #2c68d2, #64b5f6); 
+  color: white;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #e91e63, #ff4081); 
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 90%;
+  }
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
