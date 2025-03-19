@@ -1,0 +1,73 @@
+.container {
+    font-family: 'Roboto', sans-serif;
+    padding: 0x;
+    background: linear-gradient(135deg, #1f1f7a, #64b5f6);
+    color: #ffffff;
+    text-align: center;
+    min-height: 100vh;
+    width: 100%; 
+    box-sizing: border-box; 
+  }
+  
+  
+  .heroSection {
+    padding: 50px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .heroSection .heading {
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #ffeb3b;
+  }
+  
+  .heroSection .subheading {
+    font-size: 20px;
+    margin-bottom: 25px;
+    color: #ffffff;
+  }
+  
+  .heroSection .ctaButton {
+    background: #ff4081;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .heroSection .ctaButton:hover {
+    background: #e91e63;
+  }
+  
+  .featureSection {
+    margin-top: 40px;
+  }
+  
+  .featureSection .sectionHeading {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #ffffff;
+  }
+  
+  .featureSection .features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .featureSection .feature {
+    max-width: 250px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+  }
+  
