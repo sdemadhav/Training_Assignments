@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entities.Accounts;
+import com.example.demo.entities.Customer;
 import com.example.demo.repositories.AccountsRepo;
+import com.example.demo.repositories.CustomerRepo;
 
 @Service
 public class AccountsService {
 	@Autowired
 	AccountsRepo ar;
+	
+	@Autowired
+	CustomerRepo cr;
 	
 	public List<Accounts> getAllAccounts() {
 		return ar.findAll();
@@ -29,5 +34,15 @@ public class AccountsService {
 		ar.save(acc);
 		return "Created Account Successfully !";
 	}
+
+	
+	public List<Accounts> getAccountsByCustomerId(int customerId) {
+        Optional<Customer> customer = cr.findById(customerId);
+        if (customer.isPresent()) {
+            return ar.findByCustomer(customer.get());
+        } else {
+            throw new RuntimeException("Customer not found!");
+        }
+    }
 
 }

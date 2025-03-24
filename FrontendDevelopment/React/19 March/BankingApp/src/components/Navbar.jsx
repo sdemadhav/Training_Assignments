@@ -15,7 +15,7 @@ function Navbar() {
           <li><Link to="/services">Services</Link></li>
           <li><Link to="/contact">Contact Us</Link></li>
         </ul>
-        <div>
+        <div className="reg-log">
         <Link to="/register">
         <button className="login-btn">Register</button>
         </Link>

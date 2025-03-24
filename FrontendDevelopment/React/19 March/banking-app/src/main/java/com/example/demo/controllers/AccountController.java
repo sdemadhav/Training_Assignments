@@ -34,5 +34,10 @@ public class AccountController {
 	public Optional<Accounts> getAccountsById(@PathVariable("id") int id) {
 		return as.getAccountById(id);
 	}
+	
+	@GetMapping("/customer-accounts/{id}")
+	public List<Accounts> getAccountsByCustomerId(@PathVariable("id") int id) {
+		return as.getAccountsByCustomerId(id);
+	}
 
 }

@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import "./NetbankingStyle.css"; 
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { set_login_true } from "../ReduxContainer/AuthContainer/AuthAction";
 
 function Netbanking() {
   const [customerId, setCustomerId] = useState("");
@@ -9,8 +11,10 @@ function Netbanking() {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
+    console.log("coming in handleSubmit")
     e.preventDefault();
     if (!customerId || !password) {
       setError("Both fields are required.");
@@ -19,10 +23,15 @@ function Netbanking() {
     setError("");
 
     try {
-
+      console.log("coming in try")
       const response = await axios.post("http://localhost:8080/login", { customerId, password })
-      
+      console.log("coming after response")
+
       if (response.data) {
+        const loggedInUser = await axios.get(`http://localhost:8080/customer/${customerId}`)
+        console.log(loggedInUser.data);
+        
+        dispatch(set_login_true(loggedInUser.data))
         navigate('/welcome')
       } else {
         setError(response.data);

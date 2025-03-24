@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import "./MoneyTransfer.css";
+import axios from "axios";
+import "./MoneyTransferStyle.css";
+import { useSelector } from "react-redux";
 
 function MoneyTransfer() {
   const [senderAccounts, setSenderAccounts] = useState([]);
@@ -10,18 +12,34 @@ function MoneyTransfer() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
-  useEffect(() => {
+  const loggedInUser = useSelector((state) => state.user);
 
+  useEffect(() => {
     async function fetchSenderAccounts() {
       try {
-        const response = await axios.get(`/getAccounts`);
-        setSenderAccounts(response.data.accounts);
+        if (!loggedInUser?.customerId) return;
+  
+        const response = await axios.get(
+          `http://localhost:8080/customer-accounts/${loggedInUser.customerId}`
+        );
+  
+        console.log("API Response:", response.data); 
+  
+        if (Array.isArray(response.data) && response.data.length > 0) {
+          setSenderAccounts(response.data); 
+        } else {
+          setError("No accounts found.");
+        }
       } catch (err) {
-        setError("Failed to load accounts");
+        console.error("Error fetching accounts:", err);
+        setError("Failed to load accounts.");
       }
     }
+  
     fetchSenderAccounts();
-  }, []);
+  }, [loggedInUser]);
+  
+  
 
   const verifyReceiver = async () => {
     setError("");
@@ -31,8 +49,8 @@ function MoneyTransfer() {
       return;
     }
     try {
-      const response = await axios.get(`/verifyReceiver/${receiverAccount}`);
-      setReceiverDetails(response.data);
+      const response = await axios.get(`http://localhost:8080/accounts/${receiverAccount}`);
+      setReceiverDetails(response.data.customer);
     } catch (err) {
       setError("Receiver account not found.");
     }
@@ -46,27 +64,37 @@ function MoneyTransfer() {
       setError("All fields are required.");
       return;
     }
-    if (isNaN(amount) || amount <= 0) {
+    if (isNaN(Number(amount)) || Number(amount) <= 0) {
       setError("Invalid amount.");
       return;
     }
 
-    const sender = senderAccounts.find(acc => acc.accountNumber === selectedSender);
-    if (sender.balance < amount) {
+    const sender = senderAccounts.find((acc) => acc.accountId === Number(selectedSender));
+    console.log(sender.balance)
+    if (!sender) {
+      setError("Invalid sender account.");
+      return;
+    }
+
+    if (sender.balance < Number(amount)) {
       setError("Insufficient funds.");
       return;
     }
 
-    try {
-      const response = await api.post("/transferMoney", {
-        senderAccount: selectedSender,
-        receiverAccount,
-        amount
-      });
 
-      if (response.data.success) {
+    try {
+      const response = await axios.post(`http://localhost:8080/transactions`, {
+        senderAccountId: selectedSender,
+        receiverAccountId: receiverAccount,
+        amount: Number(amount),
+      });
+      
+      console.log(response);
+      
+      if (response.status === 200) {
         setSuccessMessage("Money transferred successfully!");
         setAmount("");
+        return;
       } else {
         setError(response.data.message || "Transfer failed.");
       }
@@ -86,9 +114,9 @@ function MoneyTransfer() {
         <select value={selectedSender} onChange={(e) => setSelectedSender(e.target.value)}>
           <option value="">Select Account</option>
           {senderAccounts.map((acc) => (
-            <option key={acc.accountNumber} value={acc.accountNumber}>
-              {acc.accountNumber} - ₹{acc.balance}
-            </option>
+            <option key={acc.accountId} value={acc.accountId}>
+            {acc.accountId} - ₹{acc.balance}
+          </option>
           ))}
         </select>
       </div>
@@ -106,8 +134,12 @@ function MoneyTransfer() {
 
       {receiverDetails && (
         <div className="receiver-details">
-          <p><strong>Name:</strong> {receiverDetails.name}</p>
-          <p><strong>Bank:</strong> {receiverDetails.bank}</p>
+          <p>
+            <strong>Name:</strong> {receiverDetails.name}
+          </p>
+          <p>
+            <strong>Bank:</strong> Pinacle Banking Services     {/* {receiverDetails.bank}*/}
+          </p>
         </div>
       )}
 
